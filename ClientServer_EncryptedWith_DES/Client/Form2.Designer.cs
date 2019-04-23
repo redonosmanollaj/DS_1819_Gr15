@@ -47,7 +47,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.txtKerkesa = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtArdhura = new System.Windows.Forms.TextBox();
             this.btnKerko = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -231,14 +231,14 @@
             this.label17.TabIndex = 20;
             this.label17.Text = "Pergjigjja nga serveri";
             // 
-            // textBox1
+            // txtArdhura
             // 
-            this.textBox1.Location = new System.Drawing.Point(569, 215);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(184, 84);
-            this.textBox1.TabIndex = 21;
+            this.txtArdhura.Location = new System.Drawing.Point(569, 215);
+            this.txtArdhura.Multiline = true;
+            this.txtArdhura.Name = "txtArdhura";
+            this.txtArdhura.ReadOnly = true;
+            this.txtArdhura.Size = new System.Drawing.Size(184, 84);
+            this.txtArdhura.TabIndex = 21;
             // 
             // btnKerko
             // 
@@ -256,7 +256,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnKerko);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtArdhura);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.txtKerkesa);
             this.Controls.Add(this.label16);
@@ -304,7 +304,7 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtKerkesa;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtArdhura;
         private System.Windows.Forms.Button btnKerko;
     }
 }
