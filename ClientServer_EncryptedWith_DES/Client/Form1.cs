@@ -19,7 +19,7 @@ namespace Client
         static public int port = 0;
 
         static public IPEndPoint ip;
-        public Socket socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        public static Socket socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         public Form1()
         {
