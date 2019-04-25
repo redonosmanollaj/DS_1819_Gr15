@@ -21,11 +21,6 @@ namespace Client
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void label2_Click(object sender, EventArgs e)
         {
 
@@ -48,32 +43,34 @@ namespace Client
 
         private void btnKerko_Click(object sender, EventArgs e)
         {
-            while (true)
-            {
+           
+            
                 try
                 {
                     string strKerkesa = txtKerkesa.Text;
-                    byte[] byteKerkesa = Encoding.UTF8.GetBytes(strKerkesa);
-                    Enkripto(ref byteKerkesa);
-                    Form1.socketClient.Send(byteKerkesa);
+ 
+                    Form1.socketClient.Send(Encoding.UTF8.GetBytes(Enkripto(strKerkesa)));
 
+                // -----------------------------------------
 
                     byte[] byteArdhura = new byte[1024];
                     int length = Form1.socketClient.Receive(byteArdhura);
+                    string strArdhura = Encoding.UTF8.GetString(byteArdhura);
+                    string strArdhuraDekriptuar = Dekripto(strArdhura);
 
-                    Dekripto(ref byteArdhura);
-                    txtArdhura.Text = Encoding.UTF8.GetString(byteArdhura);
+                    txtArdhura.Text = strArdhuraDekriptuar;
                 }
                 catch(Exception ex)
                 {
                     MessageBox.Show("Error!" + ex.Message);
                 }
-            }
-            Form1.socketClient.Close();
+            
         }
 
-        private void Enkripto(ref byte[] byteKerkesa)
+        private string Enkripto(string strKerkesa)
         {
+            byte[] byteKerkesa = Encoding.UTF8.GetBytes(strKerkesa);
+
             DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
             objDES.Key = Encoding.UTF8.GetBytes("27651409");
             objDES.IV = Encoding.UTF8.GetBytes("12345678");
@@ -86,10 +83,13 @@ namespace Client
             cs.Write(byteKerkesa, 0, byteKerkesa.Length);
             cs.Close();
 
-            byteKerkesa = ms.ToArray();
+            byte[] byteKerkesaEnkriptuar = ms.ToArray();
+            string strKerkesaEnkriptuar = Convert.ToBase64String(byteKerkesaEnkriptuar);
+
+            return strKerkesaEnkriptuar;
         }
 
-        private void Dekripto(ref byte[] byteArdhura)
+        private string Dekripto(string strArdhura)
         {
             DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
             objDES.Key = Encoding.UTF8.GetBytes("27651409");
@@ -97,14 +97,17 @@ namespace Client
             objDES.Padding = PaddingMode.Zeros;
             objDES.Mode = CipherMode.CBC;
 
+            byte[] byteArdhuraEnkriptuar = Convert.FromBase64String(strArdhura);
 
-            MemoryStream ms = new MemoryStream(byteArdhura);
+            MemoryStream ms = new MemoryStream(byteArdhuraEnkriptuar);
             CryptoStream cs = new CryptoStream(ms, objDES.CreateDecryptor(), CryptoStreamMode.Read);
 
-            byteArdhura = new byte[ms.Length];
-            cs.Read(byteArdhura, 0, byteArdhura.Length);
+            byte[] byteArdhuraDekriptuar = new byte[ms.Length];
+            cs.Read(byteArdhuraDekriptuar, 0, byteArdhuraDekriptuar.Length);
             cs.Close();
 
+            string strArdhuraDekriptuar = Encoding.UTF8.GetString(byteArdhuraDekriptuar);
+            return strArdhuraDekriptuar;
         }
     }
 }
