@@ -45,25 +45,29 @@ namespace Client
         {
            
             
-              //  try
-              //  {
+                try
+                {
                     string strKerkesa = txtKerkesa.Text;
- 
-                    Form1.socketClient.Send(Encoding.UTF8.GetBytes(Enkripto(strKerkesa)));
 
-                // -----------------------------------------
+                    if (strKerkesa != "")
+                    {
+                        Form1.socketClient.Send(Encoding.UTF8.GetBytes(Enkripto(strKerkesa)));
+                        byte[] byteArdhura = new byte[1024];
+                        int length = Form1.socketClient.Receive(byteArdhura);
+                        string strArdhura = Encoding.UTF8.GetString(byteArdhura, 0, length);
+                        string strArdhuraDekriptuar = Dekripto(strArdhura);
 
-                    byte[] byteArdhura = new byte[1024];
-                    int length = Form1.socketClient.Receive(byteArdhura);
-                    string strArdhura = Encoding.UTF8.GetString(byteArdhura,0,length);
-                    string strArdhuraDekriptuar = Dekripto(strArdhura);
-
-                    txtArdhura.Text = strArdhuraDekriptuar;
-             //   }
-              //  catch(Exception ex)
-              //  {
-               //     MessageBox.Show("Error!" + ex.Message);
-                //}
+                        txtArdhura.Text = strArdhuraDekriptuar;
+                    }
+                    else
+                    {
+                    MessageBox.Show("Kerkesa eshte boshe!");
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Error!" + ex.Message);
+                }
             
         }
 

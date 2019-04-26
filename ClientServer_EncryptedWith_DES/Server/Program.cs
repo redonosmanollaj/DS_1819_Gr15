@@ -123,7 +123,7 @@ namespace Server
 
         private static string IPADRESA()
         {
-            return "";
+            return "IPADRESA e klientit eshte ......";
         }
 
         private static string NUMRIIPORTIT()
