@@ -45,8 +45,8 @@ namespace Client
         {
            
             
-                try
-                {
+              //  try
+              //  {
                     string strKerkesa = txtKerkesa.Text;
  
                     Form1.socketClient.Send(Encoding.UTF8.GetBytes(Enkripto(strKerkesa)));
@@ -55,19 +55,19 @@ namespace Client
 
                     byte[] byteArdhura = new byte[1024];
                     int length = Form1.socketClient.Receive(byteArdhura);
-                    string strArdhura = Encoding.UTF8.GetString(byteArdhura);
+                    string strArdhura = Encoding.UTF8.GetString(byteArdhura,0,length);
                     string strArdhuraDekriptuar = Dekripto(strArdhura);
 
                     txtArdhura.Text = strArdhuraDekriptuar;
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show("Error!" + ex.Message);
-                }
+             //   }
+              //  catch(Exception ex)
+              //  {
+               //     MessageBox.Show("Error!" + ex.Message);
+                //}
             
         }
 
-        private string Enkripto(string strKerkesa)
+        private static string Enkripto(string strKerkesa)
         {
             byte[] byteKerkesa = Encoding.UTF8.GetBytes(strKerkesa);
 
@@ -89,7 +89,7 @@ namespace Client
             return strKerkesaEnkriptuar;
         }
 
-        private string Dekripto(string strArdhura)
+        private static string Dekripto(string strArdhura)
         {
             DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
             objDES.Key = Encoding.UTF8.GetBytes("27651409");
@@ -97,6 +97,8 @@ namespace Client
             objDES.Padding = PaddingMode.Zeros;
             objDES.Mode = CipherMode.CBC;
 
+            //Encoding.ASCII.GetBytes(strArdhura);
+            //string strArdhura64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(strArdhura));
             byte[] byteArdhuraEnkriptuar = Convert.FromBase64String(strArdhura);
 
             MemoryStream ms = new MemoryStream(byteArdhuraEnkriptuar);

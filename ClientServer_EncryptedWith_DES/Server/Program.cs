@@ -43,17 +43,37 @@ namespace Server
             {
                 byte[] byteArdhura = new byte[1024];
                 int length  = connSocket.Receive(byteArdhura);
-                string strKerkesa = Encoding.UTF8.GetString(byteArdhura);
+                string strKerkesa = Encoding.UTF8.GetString(byteArdhura,0,length);
                 Console.WriteLine("Nga klienti ka ardhur kjo kerkese e enkriptuar: {0}", strKerkesa);
 
                 string kerkesaDekriptuar = Dekripto(strKerkesa);
                 Console.WriteLine("Kerkesa e dekriptuar: {0}", kerkesaDekriptuar);
 
-                string strPergjigja = "Kjo eshte pergjigja e serverit";
-                
+                string strPergjigja = "";
+                switch (kerkesaDekriptuar)
+                {
+                    case "IPADRESA": strPergjigja = IPADRESA();
+                        break;
+                    case "NUMRIIPORTIT": strPergjigja = NUMRIIPORTIT();
+                        break;
+                    case "BASHKETINGELLORE": strPergjigja = BASHKETINGELLORE();
+                        break;
+                    case "KOHA": strPergjigja = KOHA();
+                        break;
+                    case "FIBONACCI": strPergjigja = FIBONACCI();
+                        break;
+                    case "KONVERTIMI": strPergjigja = KONVERTIMI();
+                        break;
+                    default:
+                        strPergjigja = "Kerkesa eshte jo valide!";
+                        break;
+                }
+
+                Console.WriteLine("Pergjigja e serverit: {0}", strPergjigja);
                 
                 connSocket.Send(Encoding.UTF8.GetBytes(Enkripto(strPergjigja)));
-                Console.WriteLine("Nga serveri ka shkuar kjo pergjigje e enkriptuar: {0}", Encoding.UTF8.GetBytes(Enkripto(strPergjigja)));
+                Console.WriteLine("Nga serveri ka shkuar kjo pergjigje e enkriptuar: {0}", Enkripto(strPergjigja));
+                Console.WriteLine("================================================================================");
             }
         }
 
@@ -66,6 +86,7 @@ namespace Server
             objDES.Padding = PaddingMode.Zeros;
             objDES.Mode = CipherMode.CBC;
 
+            //Encoding.ASCII.GetBytes(strKerkesaEnkriptuar);
             byte[] byteKerkesaEnkriptuar = Convert.FromBase64String(strKerkesaEnkriptuar);
 
             MemoryStream ms = new MemoryStream(byteKerkesaEnkriptuar);
@@ -98,6 +119,39 @@ namespace Server
             string strPergjigjaEnkriptuar = Convert.ToBase64String(bytePergjigjaEnkriptuar);
             return strPergjigjaEnkriptuar;
         }
+
+
+        private static string IPADRESA()
+        {
+            return "";
+        }
+
+        private static string NUMRIIPORTIT()
+        {
+            return "";
+        }
+
+        private static string BASHKETINGELLORE()
+        {
+            return "";
+        }
+
+        private static string KOHA()
+        {
+            return "";
+        }
+
+        private static string FIBONACCI()
+        {
+            return "";
+        }
+
+        private static string KONVERTIMI()
+        {
+            return "";
+        }
+
+        
 
     }
 }
