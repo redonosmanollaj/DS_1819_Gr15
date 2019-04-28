@@ -13,8 +13,12 @@ namespace Server
 {
     class Program
     {
+        public static MyDes objMyDes;
+
         static void Main(string[] args)
         {
+            objMyDes = new MyDes();
+
             IPEndPoint ip = new IPEndPoint(IPAddress.Any, 12000);
             Socket socketServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -79,18 +83,10 @@ namespace Server
 
         private static string Dekripto(string strKerkesaEnkriptuar)
         {
-
-            DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
-            objDES.Key = Encoding.UTF8.GetBytes("27651409");
-            objDES.IV = Encoding.UTF8.GetBytes("12345678");
-            objDES.Padding = PaddingMode.Zeros;
-            objDES.Mode = CipherMode.CBC;
-
-            //Encoding.ASCII.GetBytes(strKerkesaEnkriptuar);
             byte[] byteKerkesaEnkriptuar = Convert.FromBase64String(strKerkesaEnkriptuar);
 
             MemoryStream ms = new MemoryStream(byteKerkesaEnkriptuar);
-            CryptoStream cs = new CryptoStream(ms, objDES.CreateDecryptor(), CryptoStreamMode.Read);
+            CryptoStream cs = new CryptoStream(ms, objMyDes.objDES.CreateDecryptor(), CryptoStreamMode.Read);
             byte[] byteKerkesaDekriptuar = new byte[ms.Length];
             cs.Read(byteKerkesaDekriptuar, 0, byteKerkesaDekriptuar.Length);
             cs.Close();
@@ -103,15 +99,9 @@ namespace Server
         {
             byte[] bytePergjigja = Encoding.UTF8.GetBytes(strPergjigja);
 
-            DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
-            objDES.Key = Encoding.UTF8.GetBytes("27651409");
-            objDES.IV = Encoding.UTF8.GetBytes("12345678");
-            objDES.Padding = PaddingMode.Zeros;
-            objDES.Mode = CipherMode.CBC;
-
             MemoryStream ms = new MemoryStream();
 
-            CryptoStream cs = new CryptoStream(ms, objDES.CreateEncryptor(), CryptoStreamMode.Write);
+            CryptoStream cs = new CryptoStream(ms, objMyDes.objDES.CreateEncryptor(), CryptoStreamMode.Write);
             cs.Write(bytePergjigja, 0, bytePergjigja.Length);
             cs.Close();
 
