@@ -16,6 +16,8 @@ namespace Client
 {
     public partial class Form2 : Form
     {
+        public static MyDes objMyDes;
+
         public Form2()
         {
             InitializeComponent();
@@ -28,6 +30,7 @@ namespace Client
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            objMyDes = new MyDes();
             lblIpAddress.Text = Form1.strIp;
         }
 
@@ -75,15 +78,9 @@ namespace Client
         {
             byte[] byteKerkesa = Encoding.UTF8.GetBytes(strKerkesa);
 
-            DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
-            objDES.Key = Encoding.UTF8.GetBytes("27651409");
-            objDES.IV = Encoding.UTF8.GetBytes("12345678");
-            objDES.Padding = PaddingMode.Zeros;
-            objDES.Mode = CipherMode.CBC;
-
             MemoryStream ms = new MemoryStream();
 
-            CryptoStream cs = new CryptoStream(ms, objDES.CreateEncryptor(), CryptoStreamMode.Write);
+            CryptoStream cs = new CryptoStream(ms, objMyDes.objDES.CreateEncryptor(), CryptoStreamMode.Write);
             cs.Write(byteKerkesa, 0, byteKerkesa.Length);
             cs.Close();
 
@@ -95,18 +92,11 @@ namespace Client
 
         private static string Dekripto(string strArdhura)
         {
-            DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
-            objDES.Key = Encoding.UTF8.GetBytes("27651409");
-            objDES.IV = Encoding.UTF8.GetBytes("12345678");
-            objDES.Padding = PaddingMode.Zeros;
-            objDES.Mode = CipherMode.CBC;
 
-            //Encoding.ASCII.GetBytes(strArdhura);
-            //string strArdhura64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(strArdhura));
             byte[] byteArdhuraEnkriptuar = Convert.FromBase64String(strArdhura);
 
             MemoryStream ms = new MemoryStream(byteArdhuraEnkriptuar);
-            CryptoStream cs = new CryptoStream(ms, objDES.CreateDecryptor(), CryptoStreamMode.Read);
+            CryptoStream cs = new CryptoStream(ms, objMyDes.objDES.CreateDecryptor(), CryptoStreamMode.Read);
 
             byte[] byteArdhuraDekriptuar = new byte[ms.Length];
             cs.Read(byteArdhuraDekriptuar, 0, byteArdhuraDekriptuar.Length);
@@ -115,5 +105,7 @@ namespace Client
             string strArdhuraDekriptuar = Encoding.UTF8.GetString(byteArdhuraDekriptuar);
             return strArdhuraDekriptuar;
         }
+
+        
     }
 }
