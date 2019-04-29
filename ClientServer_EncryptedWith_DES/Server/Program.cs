@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,12 @@ using System.Net;
 using System.Security.Cryptography;
 using System.IO;
 using System.Threading;
+using System.IO.Ports;
+using System.Management;
+using System.Windows.Forms;
+using System.ComponentModel;
+
+
 
 namespace Server
 {
@@ -52,8 +60,10 @@ namespace Server
                 string strPergjigja = "";
                 switch (kerkesaDekriptuar)
                 {
-                    case "IPADRESA": strPergjigja = IPADRESA();
+                    case "EMRIIHOSTIT": strPergjigja = EMRIIHOSTIT();
                         break;
+                    case "IPADRESA": strPergjigja = IPADRESA();
+                        break;                    
                     case "NUMRIIPORTIT": strPergjigja = NUMRIIPORTIT();
                         break;
                     case "BASHKETINGELLORE": strPergjigja = BASHKETINGELLORE();
@@ -121,11 +131,19 @@ namespace Server
         }
 
 
+        private static string EMRIIHOSTIT()
+        {
+            
+            return "IP adresa ...";
+
+        }
         private static string IPADRESA()
         {
-            return "IPADRESA e klientit eshte ......";
-        }
-
+            string hostName = Dns.GetHostName();
+            hostName.ToString();
+            return hostName;
+           
+        }           
         private static string NUMRIIPORTIT()
         {
             return "";
