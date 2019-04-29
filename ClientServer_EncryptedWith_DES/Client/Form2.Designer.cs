@@ -71,9 +71,8 @@
             this.lblIpAddress.Location = new System.Drawing.Point(423, 41);
             this.lblIpAddress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblIpAddress.Name = "lblIpAddress";
-            this.lblIpAddress.Size = new System.Drawing.Size(85, 29);
+            this.lblIpAddress.Size = new System.Drawing.Size(0, 29);
             this.lblIpAddress.TabIndex = 2;
-            this.lblIpAddress.Text = "label2";
             this.lblIpAddress.Click += new System.EventHandler(this.label2_Click);
             // 
             // label2

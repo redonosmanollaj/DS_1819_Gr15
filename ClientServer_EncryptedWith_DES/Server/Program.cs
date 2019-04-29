@@ -127,7 +127,7 @@ namespace Server
             return "IP adresa ...";
 
         }
-        private static string IPADRESA()
+        private static string IPADRESA() //emri i hostit
         {
             string hostName = Dns.GetHostName();
             hostName.ToString();
