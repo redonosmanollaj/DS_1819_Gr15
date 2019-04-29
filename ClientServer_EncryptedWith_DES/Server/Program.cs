@@ -17,6 +17,7 @@ using System.ComponentModel;
 
 
 
+
 namespace Server
 {
     class Program
@@ -70,12 +71,10 @@ namespace Server
                         break;                    
                     case "NUMRIIPORTIT": strPergjigja = NUMRIIPORTIT();
                         break;
-                    case "BASHKETINGELLORE": strPergjigja = BASHKETINGELLORE();
-                        break;
+                    
                     case "KOHA": strPergjigja = KOHA();
                         break;
-                    case "FIBONACCI": strPergjigja = FIBONACCI();
-                        break;
+                    
                     case "KONVERTIMI": strPergjigja = KONVERTIMI();
                         break;
                     default:
@@ -123,30 +122,29 @@ namespace Server
 
         private static string EMRIIHOSTIT()
         {
-            
-            return "IP adresa ...";
-
+            string hostName = Dns.GetHostName();
+            hostName.ToString();
+            return hostName;
         }
         private static string IPADRESA() //emri i hostit
         {
             string hostName = Dns.GetHostName();
-            hostName.ToString();
-            return hostName;
-           
+
+            string IP = Dns.GetHostByName(hostName).AddressList[0].ToString();
+            return IP;
         }           
         private static string NUMRIIPORTIT()
         {
             return "";
         }
 
-        private static string BASHKETINGELLORE()
-        {
-            return "";
-        }
+        
 
         private static string KOHA()
         {
-            return "";
+
+            return DateTime.Now.ToString("h:mm:ss tt");
+        
         }
 
         private static string FIBONACCI()
