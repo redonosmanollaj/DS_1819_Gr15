@@ -68,13 +68,13 @@ namespace Server
                 else if (kerkesaDekriptuar.Contains("IPADRESA"))
                     strPergjigja = IPADRESA();
                 else if (kerkesaDekriptuar.Contains("NUMRIIPORTIT"))
-                    strPergjigja = NUMRIIPORTIT();
+                    strPergjigja = NUMRIIPORTIT(ref connSocket);
                 else if (kerkesaDekriptuar.Contains("KOHA"))
                     strPergjigja = KOHA();
                 else if (kerkesaDekriptuar.Contains("FIBONACCI"))
-                    strPergjigja = FIBONACCI();
+                    strPergjigja = FIBONACCI(ref connSocket);
                 else if (kerkesaDekriptuar.Contains("KONVERTIMI"))
-                    strPergjigja = KONVERTIMI();
+                    strPergjigja = KONVERTIMI(ref connSocket);
                 else
                     strPergjigja = "Kerkesa eshte jo valide!";
 
@@ -129,9 +129,11 @@ namespace Server
             string IP = Dns.GetHostByName(hostName).AddressList[0].ToString();
             return IP;
         }           
-        private static string NUMRIIPORTIT()
+        private static string NUMRIIPORTIT(ref Socket socketi)
         {
-            return "";
+            IPEndPoint clientip = (IPEndPoint)socketi.RemoteEndPoint;
+            int porti = clientip.Port;
+            return "Numri i portit me te cilini eshte lidhur klienti eshte "+porti;
         }
 
         
@@ -143,14 +145,94 @@ namespace Server
         
         }
 
-        private static string FIBONACCI()
+        private static string FIBONACCI(ref Socket socketi)
         {
-            return "";
+            string strJepeNumrin = "Keni kerkuar kerkesen FIBONACCI. \nShkruani nje numer ...";
+            socketi.Send(Encoding.UTF8.GetBytes(Enkripto(strJepeNumrin)));
+
+            
+
+            byte[] byteArdhura = new byte[1024];
+            int length = socketi.Receive(byteArdhura);
+            string strNumri= Encoding.UTF8.GetString(byteArdhura, 0, length);
+            Console.WriteLine("Nga klienti ka ardhur ky numer i enkriptuar: {0}", strNumri);
+
+            string strNumriDekriptuar = Dekripto(strNumri);
+
+            int numri = int.Parse(strNumriDekriptuar);
+            int fibonacci;
+
+            int a=0;
+            int b=1;
+            int c;
+            if (numri == 0 || numri == 1)
+                fibonacci = numri;
+            else
+            {
+                for (int i = 2; i <= numri; i++)
+                {
+                    c = a + b;
+                    a = b;
+                    b = c;
+                }
+                fibonacci = b;
+            }
+               
+
+
+            return "Fibonacci i numrit "+numri+" eshte "+fibonacci;
         }
 
-        private static string KONVERTIMI()
+        private static string KONVERTIMI(ref Socket socketi)
         {
-            return "";
+            string strJepeModin = "Keni kerkuar kerkesen KONVERTIMI. \n Zgjedhni njeren nga modet e meposhtme: \n GallonsToLiters \n LitersToGallons \n " +
+                "DegreesToRadians \n RadiansToDegrees \n KilowattToHorsepower \n HorsepowerToKilowatt";
+            socketi.Send(Encoding.UTF8.GetBytes(Enkripto(strJepeModin)));
+
+
+            byte[] byteArdhura = new byte[1024];
+            int length = socketi.Receive(byteArdhura);
+            string modiEnkriptuar = Encoding.UTF8.GetString(byteArdhura, 0, length);
+            Console.WriteLine("Nga klienti ka ardhur ky tekst i enkriptuar: {0}", modiEnkriptuar);
+            string modi = Dekripto(modiEnkriptuar);
+
+            // --------------------------------------------------------------
+
+            string strJepeNumrin = "Shkruani numrin ...";
+            socketi.Send(Encoding.UTF8.GetBytes(Enkripto(strJepeNumrin)));
+
+            byte[] byteArdhura1 = new byte[1024];
+            int length1 = socketi.Receive(byteArdhura1);
+            string strNumriEnkriptuar = Encoding.UTF8.GetString(byteArdhura1, 0, length1);
+            string strNumri = Dekripto(strNumriEnkriptuar);
+
+            double numri = double.Parse(strNumri);
+            Console.WriteLine("Nga klienti ka ardhur ky tekst i enkriptuar: {0}", strNumriEnkriptuar);
+
+            double rezultati = 0;
+            modi = modi.ToLower();
+            if (modi.Contains("gallonstoliters"))
+                rezultati = numri * 3.785;
+            else if (modi.Contains("literstogallons"))
+                rezultati = numri / 3.785;
+            else if (modi.Contains("degreestoradians"))
+                rezultati = numri * 3.14 / 180;
+            else if (modi.Contains("radianstodegrees"))
+                rezultati = numri * 180 / 3.14;
+            else if (modi.Contains("kilowatttohorsepower"))
+                rezultati = numri / 0.7457;
+            else if (modi.Contains("horsepowertokilowatt"))
+                rezultati = numri * 0.7457;
+            else
+                return "Modi nuk eshte valid!";
+
+
+            string njesia1 = modi.Substring(0, modi.IndexOf("to"));
+            string njesia2 = modi.Substring(modi.LastIndexOf("to")+2, modi.Length-njesia1.Length-2);
+
+            string strReturn = numri + " " + njesia1 + " = " + rezultati.ToString("##.##") + " " + njesia2;
+
+            return strReturn;
         }
 
         
