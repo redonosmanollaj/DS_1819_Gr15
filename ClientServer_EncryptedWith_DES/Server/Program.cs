@@ -120,20 +120,20 @@ namespace Server
         {
             string hostName = Dns.GetHostName();
             hostName.ToString();
-            return hostName;
+            return "Emri i hostit me te cilin jeni lidhur eshte "+hostName;
         }
         private static string IPADRESA() //emri i hostit
         {
             string hostName = Dns.GetHostName();
 
             string IP = Dns.GetHostByName(hostName).AddressList[0].ToString();
-            return IP;
+            return "IP Adresa juaj eshte "+IP;
         }           
         private static string NUMRIIPORTIT(ref Socket socketi)
         {
             IPEndPoint clientip = (IPEndPoint)socketi.RemoteEndPoint;
             int porti = clientip.Port;
-            return "Numri i portit me te cilini eshte lidhur klienti eshte "+porti;
+            return "Numri i portit me te cilin ju ka lidhur serveri eshte "+porti;
         }
 
         
@@ -141,7 +141,7 @@ namespace Server
         private static string KOHA()
         {
 
-            return DateTime.Now.ToString("h:mm:ss tt");
+            return "Koha aktuale sipas sistemit te serverit eshte "+DateTime.Now.ToString("h:mm:ss tt");
         
         }
 
@@ -158,6 +158,7 @@ namespace Server
             Console.WriteLine("Nga klienti ka ardhur ky numer i enkriptuar: {0}", strNumri);
 
             string strNumriDekriptuar = Dekripto(strNumri);
+
 
             int numri = int.Parse(strNumriDekriptuar);
             int fibonacci;
