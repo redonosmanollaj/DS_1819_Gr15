@@ -63,24 +63,20 @@ namespace Server
                 Console.WriteLine("Kerkesa e dekriptuar: {0}", kerkesaDekriptuar);
 
                 string strPergjigja = "";
-                switch (kerkesaDekriptuar)
-                {
-                    case "EMRIIHOSTIT": strPergjigja = EMRIIHOSTIT();
-                        break;
-                    case "IPADRESA": strPergjigja = IPADRESA();
-                        break;                    
-                    case "NUMRIIPORTIT": strPergjigja = NUMRIIPORTIT();
-                        break;
-                    
-                    case "KOHA": strPergjigja = KOHA();
-                        break;
-                    
-                    case "KONVERTIMI": strPergjigja = KONVERTIMI();
-                        break;
-                    default:
-                        strPergjigja = "Kerkesa eshte jo valide!";
-                        break;
-                }
+                if (kerkesaDekriptuar.Contains("EMRIIHOSTIT"))
+                    strPergjigja = EMRIIHOSTIT();
+                else if (kerkesaDekriptuar.Contains("IPADRESA"))
+                    strPergjigja = IPADRESA();
+                else if (kerkesaDekriptuar.Contains("NUMRIIPORTIT"))
+                    strPergjigja = NUMRIIPORTIT();
+                else if (kerkesaDekriptuar.Contains("KOHA"))
+                    strPergjigja = KOHA();
+                else if (kerkesaDekriptuar.Contains("FIBONACCI"))
+                    strPergjigja = FIBONACCI();
+                else if (kerkesaDekriptuar.Contains("KONVERTIMI"))
+                    strPergjigja = KONVERTIMI();
+                else
+                    strPergjigja = "Kerkesa eshte jo valide!";
 
                 Console.WriteLine("Pergjigja e serverit: {0}", strPergjigja);
                 
