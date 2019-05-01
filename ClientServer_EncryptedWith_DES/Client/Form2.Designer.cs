@@ -49,8 +49,6 @@
             this.btnKerko = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -253,44 +251,22 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(40, 368);
+            this.label18.Location = new System.Drawing.Point(40, 203);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(111, 17);
             this.label18.TabIndex = 23;
-            this.label18.Text = "7. EMRIIHOSTIT";
+            this.label18.Text = "3. EMRIIHOSTIT";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(341, 368);
+            this.label19.Location = new System.Drawing.Point(342, 203);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(334, 17);
             this.label19.TabIndex = 24;
             this.label19.Text = "Kthen emrin e paisjes me te cilen eshte lidhur klienti";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(341, 193);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(339, 34);
-            this.label12.TabIndex = 14;
-            this.label12.Text = "Merr si parameter nje tekst dhe kthen\r\nnumrin e bashketingelloreve qe gjenden ne " +
-    "ate tekst";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(40, 193);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(167, 17);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "3. BASHKETINGELLORE";
             // 
             // Form2
             // 
@@ -307,14 +283,12 @@
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -352,7 +326,5 @@
         private System.Windows.Forms.Button btnKerko;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label5;
     }
 }
