@@ -33,14 +33,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -51,6 +49,8 @@
             this.btnKerko = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -105,16 +105,6 @@
             this.label4.Size = new System.Drawing.Size(122, 17);
             this.label4.TabIndex = 5;
             this.label4.Text = "2. NUMRIIPORTIT";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(40, 193);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(167, 17);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "3. BASHKETINGELLORE";
             // 
             // label6
             // 
@@ -177,18 +167,6 @@
             this.label11.TabIndex = 13;
             this.label11.Text = "Kthen portin ne te cilin eshte lidhur klienti";
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(341, 193);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(339, 34);
-            this.label12.TabIndex = 14;
-            this.label12.Text = "Merr si parameter nje tekst dhe kthen\r\nnumrin e bashketingelloreve qe gjenden ne " +
-    "ate tekst";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -233,7 +211,7 @@
             // txtKerkesa
             // 
             this.txtKerkesa.Location = new System.Drawing.Point(757, 130);
-            this.txtKerkesa.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtKerkesa.Margin = new System.Windows.Forms.Padding(4);
             this.txtKerkesa.Name = "txtKerkesa";
             this.txtKerkesa.Size = new System.Drawing.Size(245, 22);
             this.txtKerkesa.TabIndex = 19;
@@ -254,7 +232,7 @@
             // txtArdhura
             // 
             this.txtArdhura.Location = new System.Drawing.Point(759, 265);
-            this.txtArdhura.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArdhura.Margin = new System.Windows.Forms.Padding(4);
             this.txtArdhura.Multiline = true;
             this.txtArdhura.Name = "txtArdhura";
             this.txtArdhura.ReadOnly = true;
@@ -264,7 +242,7 @@
             // btnKerko
             // 
             this.btnKerko.Location = new System.Drawing.Point(863, 166);
-            this.btnKerko.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnKerko.Margin = new System.Windows.Forms.Padding(4);
             this.btnKerko.Name = "btnKerko";
             this.btnKerko.Size = new System.Drawing.Size(141, 28);
             this.btnKerko.TabIndex = 22;
@@ -291,6 +269,28 @@
             this.label19.Size = new System.Drawing.Size(334, 17);
             this.label19.TabIndex = 24;
             this.label19.Text = "Kthen emrin e paisjes me te cilen eshte lidhur klienti";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(341, 193);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(339, 34);
+            this.label12.TabIndex = 14;
+            this.label12.Text = "Merr si parameter nje tekst dhe kthen\r\nnumrin e bashketingelloreve qe gjenden ne " +
+    "ate tekst";
+            this.label12.Click += new System.EventHandler(this.label12_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(40, 193);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(167, 17);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "3. BASHKETINGELLORE";
             // 
             // Form2
             // 
@@ -320,7 +320,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblIpAddress);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
@@ -336,14 +336,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label15;
@@ -354,5 +352,7 @@
         private System.Windows.Forms.Button btnKerko;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label5;
     }
 }
