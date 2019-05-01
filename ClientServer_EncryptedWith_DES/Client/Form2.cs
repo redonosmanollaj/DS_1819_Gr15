@@ -106,6 +106,9 @@ namespace Client
             return strArdhuraDekriptuar;
         }
 
-        
+        private void txtKerkesa_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

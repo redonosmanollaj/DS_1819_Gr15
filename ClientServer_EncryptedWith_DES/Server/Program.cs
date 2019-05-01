@@ -39,15 +39,14 @@ namespace Server
             while (true)
             {
                 Socket connSocket = socketServer.Accept();
-                Thread th = new Thread(() => Handle_Connection(connSocket));
-                th.Start();
-                
+                Thread th = new Thread(() => Handle_Connection(ref connSocket));
+                 th.Start();
 
             }
         }
 
 
-        private static void Handle_Connection(Socket connSocket)
+        private static void Handle_Connection(ref Socket connSocket)
         {
           
                 IPEndPoint clientip = (IPEndPoint)connSocket.RemoteEndPoint;
@@ -61,6 +60,8 @@ namespace Server
 
                 string kerkesaDekriptuar = Dekripto(strKerkesa);
                 Console.WriteLine("Kerkesa e dekriptuar: {0}", kerkesaDekriptuar);
+
+                kerkesaDekriptuar = kerkesaDekriptuar.ToUpper();
 
                 string strPergjigja = "";
                 if (kerkesaDekriptuar.Contains("EMRIIHOSTIT"))
@@ -120,20 +121,20 @@ namespace Server
         {
             string hostName = Dns.GetHostName();
             hostName.ToString();
-            return hostName;
+            return "Emri i hostit me te cilin jeni lidhur eshte " + hostName;
         }
         private static string IPADRESA() //emri i hostit
         {
             string hostName = Dns.GetHostName();
 
             string IP = Dns.GetHostByName(hostName).AddressList[0].ToString();
-            return IP;
+            return "IP Adresa juaj eshte "+IP;
         }           
         private static string NUMRIIPORTIT(ref Socket socketi)
         {
             IPEndPoint clientip = (IPEndPoint)socketi.RemoteEndPoint;
             int porti = clientip.Port;
-            return "Numri i portit me te cilini eshte lidhur klienti eshte " + porti;
+            return "Numri i portit me te cilin ju ka lidhur serveri eshte " + porti;
         }
 
         
@@ -141,7 +142,7 @@ namespace Server
         private static string KOHA()
         {
 
-            return DateTime.Now.ToString("h:mm:ss tt");
+            return "Koha aktuale sipas sistemit te serverit eshte " + DateTime.Now.ToString("h:mm:ss tt");
         
         }
 
