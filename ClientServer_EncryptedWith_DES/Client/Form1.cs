@@ -19,7 +19,7 @@ namespace Client
         static public int port = 0;
 
         static public IPEndPoint ip;
-        public static Socket socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        public static Socket socketClient;
 
         public Form1()
         {
@@ -35,6 +35,7 @@ namespace Client
         {
             try
             {
+                socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 strIp = txtIP.Text;
                 port = Convert.ToInt32(txtPorti.Text);
                 ip = new IPEndPoint(IPAddress.Parse(strIp), port);
@@ -47,6 +48,11 @@ namespace Client
             {
                 MessageBox.Show("Lidhja me kete server deshtoi!\n" + ex.Message);
             }
+        }
+
+        private void txtIP_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
