@@ -37,25 +37,29 @@
             // 
             // txtIP
             // 
-            this.txtIP.Location = new System.Drawing.Point(190, 58);
+            this.txtIP.Location = new System.Drawing.Point(253, 71);
+            this.txtIP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtIP.Name = "txtIP";
-            this.txtIP.Size = new System.Drawing.Size(185, 20);
+            this.txtIP.Size = new System.Drawing.Size(245, 22);
             this.txtIP.TabIndex = 0;
+            this.txtIP.TextChanged += new System.EventHandler(this.txtIP_TextChanged);
             // 
             // txtPorti
             // 
-            this.txtPorti.Location = new System.Drawing.Point(190, 127);
+            this.txtPorti.Location = new System.Drawing.Point(253, 156);
+            this.txtPorti.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPorti.Name = "txtPorti";
-            this.txtPorti.Size = new System.Drawing.Size(185, 20);
+            this.txtPorti.Size = new System.Drawing.Size(245, 22);
             this.txtPorti.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 53);
+            this.label1.Location = new System.Drawing.Point(16, 65);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(160, 25);
+            this.label1.Size = new System.Drawing.Size(198, 29);
             this.label1.TabIndex = 2;
             this.label1.Text = "Emri(IP) i serverit";
             // 
@@ -63,18 +67,20 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(121, 122);
+            this.label2.Location = new System.Drawing.Point(161, 150);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 25);
+            this.label2.Size = new System.Drawing.Size(63, 29);
             this.label2.TabIndex = 3;
             this.label2.Text = "Porti";
             // 
             // btnKonektohu
             // 
             this.btnKonektohu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKonektohu.Location = new System.Drawing.Point(275, 174);
+            this.btnKonektohu.Location = new System.Drawing.Point(367, 214);
+            this.btnKonektohu.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnKonektohu.Name = "btnKonektohu";
-            this.btnKonektohu.Size = new System.Drawing.Size(100, 32);
+            this.btnKonektohu.Size = new System.Drawing.Size(133, 39);
             this.btnKonektohu.TabIndex = 4;
             this.btnKonektohu.Text = "Konektohu";
             this.btnKonektohu.UseVisualStyleBackColor = true;
@@ -82,14 +88,15 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(387, 243);
+            this.ClientSize = new System.Drawing.Size(516, 299);
             this.Controls.Add(this.btnKonektohu);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPorti);
             this.Controls.Add(this.txtIP);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
