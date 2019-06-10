@@ -17,7 +17,10 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        
+        private void Login_Load(object sender, EventArgs e)
+        {
+
+        }
 
         private void LoginBtn_Click(object sender, EventArgs e)
         {
