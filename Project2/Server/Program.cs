@@ -15,13 +15,12 @@ namespace Server
     {
         public static DESCryptoServiceProvider objDes;
         public static RSACryptoServiceProvider objRsa;
-        string strCelesiCipher;
+        public static string strCelesiCipher = "";
         public static Socket serverSocket;
 
         static void Main(string[] args)
         {
-            createRsa();
-            createDes();
+
             createServerSocket();
             while (true)
             {
@@ -29,6 +28,7 @@ namespace Server
                 Thread th = new Thread(() => handleConnection(ref connSocket));
                 th.Start();
             }
+
         }
 
         private static void createServerSocket()
@@ -45,13 +45,13 @@ namespace Server
         {
             IPEndPoint clientIp = (IPEndPoint)connSocket.RemoteEndPoint;
             Console.WriteLine("Serveri u lidh me hostin {0} ne portin {1}", clientIp.Address, clientIp.Port);
-            // Duhet me ja qu celsin publik(rsa) klientit
 
-            RSAParameters objRsaParametrat = objRsa.ExportParameters(false);
-            string strCelesiPublik = BitConverter.ToString(objRsaParametrat.P);
-            byte[] byteCelesiPublik = Encoding.UTF8.GetBytes(strCelesiPublik);
+            byte[] byteCelesiCipher = new byte[128];
+            int celesiLength = connSocket.Receive(byteCelesiCipher);
+            strCelesiCipher = Encoding.UTF8.GetString(byteCelesiCipher, 0, celesiLength);
 
-            connSocket.Send(byteCelesiPublik);
+            createRsa();
+            createDes();
 
             while (true)
             {
@@ -82,7 +82,7 @@ namespace Server
             objDes.GenerateIV();
             objDes.Padding = PaddingMode.Zeros;
             objDes.Mode = CipherMode.CBC;
-            objDes.GenerateKey();// Duhet me mar celsin prej clientit !!
+            objDes.Key = Encoding.UTF8.GetBytes(dekriptoRsa());
         }
 
         private static string enkriptoDes(string strFromServer)
@@ -119,17 +119,20 @@ namespace Server
         private static void createRsa()
         {
             objRsa = new RSACryptoServiceProvider();
+            string xmlRsaParametrat = objRsa.ToXmlString(false);
+
+            StreamWriter sw = new StreamWriter("ServerPublicKey.xml");
+            sw.Write(xmlRsaParametrat);
+            sw.Close();
             // Duhet me ja jep celsin publ
         }
 
-        private void dekriptoRsa()
+        private static string dekriptoRsa()
         {
             byte[] byteCelesiCipher = Convert.FromBase64String(strCelesiCipher);
-            byte[] byteCelesiDekriptuar = objRsa.Decrypt(byteCelesiCipher, true);
+            byte[] byteCelesiDekriptuar = objRsa.Decrypt(byteCelesiCipher,true);
 
-            StreamReader sr = new StreamReader("rsaParametrat.xml");
-            string strXmlParametrat = sr.ReadToEnd();
-            sr.Close();
+            return Encoding.UTF8.GetString(byteCelesiDekriptuar);
         }
     }
 }

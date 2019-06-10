@@ -110,5 +110,14 @@
   <ItemGroup>
     <None Include="Resources\icons8-checkmark-48.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noun_Sign Up_736543.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-add-user-male-filled-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-add-user-male-filled-501.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
