@@ -8,20 +8,43 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Xml;
 
 namespace Server
 {
     class Program
     {
+        public static XmlDocument objXml = new XmlDocument();
+
+
+        public static XmlElement rootNode;
+                                              
+        public static XmlElement profesorNode;
+        public static XmlElement nameNode;
+        public static XmlElement surnameNode;
+        public static XmlElement degreeNode;
+        public static XmlElement salaryNode;
+        public static XmlElement emailNode;
+        public static XmlElement usernameNode;
+        public static XmlElement passwordNode;
+
+
+
         public static DESCryptoServiceProvider objDes;
         public static RSACryptoServiceProvider objRsa;
         public static string strCelesiCipher = "";
         public static Socket serverSocket;
-        public static byte[] desKey = new byte[128];
+        public static byte[] desKey = new byte[8];
+        public static byte[] desIV = new byte[8];
         static void Main(string[] args)
         {
 
+            //createRsa();
+            createXmlDb();
             createServerSocket();
+
+
+
             while (true)
             {
                 Socket connSocket = serverSocket.Accept();
@@ -46,11 +69,14 @@ namespace Server
             IPEndPoint clientIp = (IPEndPoint)connSocket.RemoteEndPoint;
             Console.WriteLine("Serveri u lidh me hostin {0} ne portin {1}", clientIp.Address, clientIp.Port);
 
-            connSocket.Receive(desKey);
-            
 
-            createRsa();
+            
+            connSocket.Receive(desKey);
+            connSocket.Receive(desIV);
             createDes();
+
+
+
 
             while (true)
             {
@@ -58,11 +84,19 @@ namespace Server
                 int length = connSocket.Receive(byteFromClient);
                 string strFromClient = Encoding.UTF8.GetString(byteFromClient, 0, length);
 
+                Console.WriteLine(Encoding.UTF8.GetString(desKey));
+         
+                Console.WriteLine(Encoding.UTF8.GetString(desIV));
+
                 Console.WriteLine("Client: (Ciphertext) {0} ", strFromClient);
                 string fromClientDecrypted = dekriptoDes(strFromClient);
                 Console.WriteLine("Client: (Plaintext) {0} ", fromClientDecrypted);
 
-                string strFromServer="";
+                string[] tokens = fromClientDecrypted.Split('%');
+                string username = tokens[0];
+                string password = tokens[1];
+
+                string strFromServer="Username: "+username+" \n"+"Password: "+password;
                 //
                 // Serveri kthen diqka ...
                 //
@@ -78,10 +112,10 @@ namespace Server
         private static void createDes()
         {
             objDes = new DESCryptoServiceProvider();
-            objDes.GenerateIV();
+            objDes.IV = desIV;
             objDes.Padding = PaddingMode.Zeros;
             objDes.Mode = CipherMode.CBC;
-            objDes.Key = decryptKey();
+            objDes.Key = desKey;
         }
 
         private static string enkriptoDes(string strFromServer)
@@ -118,13 +152,58 @@ namespace Server
         private static void createRsa()
         {
             objRsa = new RSACryptoServiceProvider();
-            string xmlRsaParametrat = objRsa.ToXmlString(false);
 
-            StreamWriter sw = new StreamWriter("ServerPublicKey.xml");
+            File.WriteAllText("public-key.xml", objRsa.ToXmlString(false));
+            File.WriteAllText("private-key.xml", objRsa.ToXmlString(true));
 
-            sw.Write(xmlRsaParametrat);
-            sw.Close();
             // Duhet me ja jep celsin publ
+        }
+
+        public static void createXmlDb()
+        {
+            if (File.Exists("mesimdhenesi.xml") == false)
+            {
+                XmlTextWriter xmlTw = new XmlTextWriter("mesimdhenesi.xml", Encoding.UTF8);
+                xmlTw.WriteStartElement("mesimdhenesi");
+                xmlTw.Close();
+
+            }
+
+            objXml.Load("mesimdhenesi.xml");
+
+            rootNode = objXml.DocumentElement;
+
+            profesorNode = objXml.CreateElement("profesor");
+            nameNode = objXml.CreateElement("name");
+            surnameNode = objXml.CreateElement("surname");
+            degreeNode = objXml.CreateElement("degree");
+            salaryNode = objXml.CreateElement("salary");
+            emailNode = objXml.CreateElement("email");
+            usernameNode = objXml.CreateElement("valuta");
+            passwordNode = objXml.CreateElement("sasia");
+
+            /*  nameNode.InnerText = txtCmimi.Text;
+            valutaNode.InnerText = txtValuta.Text;
+
+            sasiaNode.InnerText = txtSasia.Text;
+
+            emriNode.InnerText = txtEmri.Text;
+
+            cmimiNode.AppendChild(vleraNode);
+            cmimiNode.AppendChild(valutaNode);  */
+
+            profesorNode.AppendChild(nameNode);
+            profesorNode.AppendChild(surnameNode);
+            profesorNode.AppendChild(degreeNode);
+            profesorNode.AppendChild(salaryNode);
+            profesorNode.AppendChild(emailNode);
+            profesorNode.AppendChild(usernameNode);
+            profesorNode.AppendChild(passwordNode);
+
+
+            rootNode.AppendChild(profesorNode);
+
+            objXml.Save("mesimdhenesi.xml");
         }
 
         private static byte[] decryptKey()
