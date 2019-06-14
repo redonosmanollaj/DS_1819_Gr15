@@ -19,6 +19,13 @@ namespace WindowsFormsApp1
 
         private void SignUp_Load(object sender, EventArgs e)
         {
+            Login log = new Login();
+            log.Show();
+            this.Hide();
+        }
+
+        private void ConfirmBtn_Click(object sender, EventArgs e)
+        {
 
         }
     }

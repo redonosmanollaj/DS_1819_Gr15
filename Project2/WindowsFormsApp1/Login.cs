@@ -134,5 +134,12 @@ namespace WindowsFormsApp1
                 MessageBox.Show("Error!" + ex.Message);
             }
         }
+
+        private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            SignUp signup = new SignUp();
+            signup.Show();
+            this.Hide();
+        }
     }
 }
