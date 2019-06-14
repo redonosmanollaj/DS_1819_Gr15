@@ -75,7 +75,7 @@ namespace WindowsFormsApp1
             return byteCelesiCipher;
         }
 
-        private static string dekriptoDes(string strFromServer)
+        public static string dekriptoDes(string strFromServer)
         {
             byte[] byteFromServer = Convert.FromBase64String(strFromServer);
 
@@ -90,7 +90,7 @@ namespace WindowsFormsApp1
             return strFromServerDecrypted;
         }
 
-        private static string enkriptoDes(string strFromClient)
+        public static string enkriptoDes(string strFromClient)
         {
             byte[] byteFromClient = Encoding.UTF8.GetBytes(strFromClient);
 
@@ -119,10 +119,7 @@ namespace WindowsFormsApp1
                     string strFromServer = Encoding.UTF8.GetString(byteFromServer, 0, length);
                     string strFromServerDecrypted = dekriptoDes(strFromServer);
 
-                    if (strFromServerDecrypted == "YES")
-                        MessageBox.Show("Logged in successfuly!");
-                    else
-                        MessageBox.Show("Logged in failed!!"+strFromServerDecrypted);
+                    MessageBox.Show(strFromServerDecrypted);
                 }
                 else
                 {
@@ -133,6 +130,13 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show("Error!" + ex.Message);
             }
+        }
+
+        private void LinkSignup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            SignUp signup = new SignUp();
+            this.Hide();
+            signup.Show();
         }
     }
 }

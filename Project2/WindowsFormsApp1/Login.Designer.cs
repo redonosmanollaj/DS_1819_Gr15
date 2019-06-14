@@ -34,6 +34,7 @@
             this.USERNAME = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.linkSignup = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,12 +91,25 @@
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             // 
+            // linkSignup
+            // 
+            this.linkSignup.AutoSize = true;
+            this.linkSignup.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkSignup.Location = new System.Drawing.Point(355, 468);
+            this.linkSignup.Name = "linkSignup";
+            this.linkSignup.Size = new System.Drawing.Size(52, 17);
+            this.linkSignup.TabIndex = 6;
+            this.linkSignup.TabStop = true;
+            this.linkSignup.Text = "Signup";
+            this.linkSignup.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkSignup_LinkClicked);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Turquoise;
             this.ClientSize = new System.Drawing.Size(474, 522);
+            this.Controls.Add(this.linkSignup);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.USERNAME);
@@ -103,7 +117,9 @@
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtUsername);
             this.ForeColor = System.Drawing.Color.OrangeRed;
+            this.MaximizeBox = false;
             this.Name = "Login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.Load += new System.EventHandler(this.Login_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -120,5 +136,6 @@
         private System.Windows.Forms.Label USERNAME;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.LinkLabel linkSignup;
     }
 }
