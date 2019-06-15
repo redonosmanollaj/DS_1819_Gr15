@@ -48,70 +48,22 @@ namespace WindowsFormsApp1
 
         private void ConfirmBtn_Click(object sender, EventArgs e)
         {
-            
-            string name = nameTxt.Text.Trim();
-            name = name.Substring(0, 1).ToUpper() + name.Substring(1);
-
-            string surname = surnameTxt.Text.Trim();
-            surname = surname.Substring(0, 1).ToUpper() + surname.Substring(1);
-
+            string name = nameTxt.Text;
+            string username = usernameTxt.Text;
             string email = emailTxt.Text;
             string degree = degreeTxt.Text;
-            double salary = double.Parse(salaryTxt.Text);
-            string username = usernameTxt.Text;
+            string salary = salaryTxt.Text;
+            string surname = usernameTxt.Text;
             string password = passwordTxt.Text;
 
-            //
-            //validation
-            //
-            if (validateName(name) == false)
-            {
-                lblName.Text = "*Wrong input";
-            }
-            else
-            {
-                lblName.Text = "";
-            }
-            if(validateEmail(email) == false)
-            {
-                lblEmail.Text = "*Wrong email";
-            }
-            else
-            {
-                lblEmail.Text = "";
-            }
-            if(validateDegree(degree) == false)
-            {
-                lblDegree.Text = "*Wrong input";
-            }
-            if(validatePass(password) == false)
-            {
-                lblPassword.Text = "*Input more chars";
-            }
-            if(validateSalary(salary) == false)
-            {
-                lblSalary.Text = "*Input a number!";
-            }
-            if(validateSurname(surname) == false)
-            {
-                lblSurname.Text = "*Wrong input";
-            }
-            if(validateUsername(username) == false)
-            {
-                lblUsername.Text = "*Wrong input";
-            }
-            if(lblConfirmPassword.Text != lblPassword.Text)
-            {
-                lblConfirmPassword.Text = "*Passwords does'nt match";
-            }
+           
+            if(validate())
+            { 
+                name = nameTxt.Text.Trim();
+                name = name.Substring(0, 1).ToUpper() + name.Substring(1);
 
-            if (validateUsername(username) && validateSurname(surname) && validateSalary(salary) &&
-                validatePass(password) && validateName(name) && validateEmail(email) && validateDegree(degree))
-            {
-                MessageBox.Show("Logged in succesfully");
-
-
-
+                surname = surnameTxt.Text.Trim();
+                surname = surname.Substring(0, 1).ToUpper() + surname.Substring(1);
 
                 Random random = new Random(DateTime.Now.Millisecond);
                 string salt = random.Next(100000, 1000000).ToString();
@@ -123,9 +75,18 @@ namespace WindowsFormsApp1
                 byte[] byteToServer = Encoding.UTF8.GetBytes(strEncryptedToServer);
 
                 Login.clientSocket.Send(byteToServer);
+
+                MessageBox.Show("Registered successfully");
+            }
+            else
+            {
+                MessageBox.Show("Can't confirm registration!");
             }
            
         }
+        //
+        //validating methods
+        //
         private bool validateName(string input)
         {
             string pattern = "^[a-zA-Z]";
@@ -200,6 +161,61 @@ namespace WindowsFormsApp1
         {
             string pattern = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
             if (Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool validate()
+        {
+
+            if (validateName(nameTxt.Text) == false)
+            {
+                lblName.Text = "*Wrong input";
+                return false;
+            }
+            if (validateEmail(emailTxt.Text) == false)
+            {
+                lblEmail.Text = "*Wrong email";
+                return false;
+            }
+            if (validateDegree(degreeTxt.Text) == false)
+            {
+                lblDegree.Text = "*Wrong input";
+                return false;
+            }
+            if (validatePass(passwordTxt.Text) == false)
+            {
+                lblPassword.Text = "*Input more chars";
+                return false;
+            }
+            if (validateSalary(double.Parse(salaryTxt.Text)) == false)
+            {
+                lblSalary.Text = "*Input a number!";
+                return false;
+            }
+            if (validateSurname(surnameTxt.Text) == false)
+            {
+                lblSurname.Text = "*Wrong input";
+                return false;
+            }
+            if (validateUsername(usernameTxt.Text) == false)
+            {
+                lblUsername.Text = "*Wrong input";
+                return false;
+            }
+            if (lblConfirmPassword.Text != lblPassword.Text)
+            {
+                lblConfirmPassword.Text = "*Passwords does'nt match";
+                return false;
+            }
+            if (validateUsername(usernameTxt.Text) && validateSurname(surnameTxt.Text) && 
+                validateSalary(double.Parse(salaryTxt.Text)) &&
+                validatePass(passwordTxt.Text) && validateName(nameTxt.Text) && 
+                validateEmail(emailTxt.Text) && validateDegree(degreeTxt.Text))
             {
                 return true;
             }
