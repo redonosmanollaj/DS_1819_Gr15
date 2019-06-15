@@ -20,14 +20,19 @@ namespace WindowsFormsApp1
 
         private void SignUp_Load(object sender, EventArgs e)
         {
-            Login log = new Login();
-            log.Show();
-            this.Hide();
+    
         }
 
-        private void ConfirmBtn_Click(object sender, EventArgs e)
-        {
 
+        private static string getSaltedHash(string salt,string password)
+        {
+            string saltedPassword = salt + password;
+            SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
+
+            byte[] byteSaltedPassword = Encoding.UTF8.GetBytes(saltedPassword);
+            byte[] byteSaltedHash = objHash.ComputeHash(byteSaltedPassword);
+
+            return Convert.ToBase64String(byteSaltedHash);
         }
 
         private void LinkLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -62,17 +67,6 @@ namespace WindowsFormsApp1
             byte[] byteToServer = Encoding.UTF8.GetBytes(strEncryptedToServer);
 
             Login.clientSocket.Send(byteToServer);
-        }
-
-        private static string getSaltedHash(string salt,string password)
-        {
-            string saltedPassword = salt + password;
-            SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
-
-            byte[] byteSaltedPassword = Encoding.UTF8.GetBytes(saltedPassword);
-            byte[] byteSaltedHash = objHash.ComputeHash(byteSaltedPassword);
-
-            return Convert.ToBase64String(byteSaltedHash);
         }
     }
 }

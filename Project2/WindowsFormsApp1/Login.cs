@@ -90,7 +90,7 @@ namespace WindowsFormsApp1
             return strFromServerDecrypted;
         }
 
-        private static string enkriptoDes(string strFromClient)
+        public static string enkriptoDes(string strFromClient)
         {
             byte[] byteFromClient = Encoding.UTF8.GetBytes(strFromClient);
 
