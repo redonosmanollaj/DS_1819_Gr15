@@ -96,8 +96,8 @@ namespace Server
                 string strFromServer = "";
                 if (tokens.Length == 2)
                 {
-                    string username = tokens[0];
-                    string password = tokens[1];
+                    string username = tokens[0].Trim();
+                    string password = tokens[1].Trim();
 
                     if (isValidLogin(username, password))
                     {
@@ -116,13 +116,13 @@ namespace Server
                     string email = tokens[2];
                     string degree = tokens[3];
                     double salary = Double.Parse(tokens[4]);
-                    string username = tokens[5];
-                    string salt = tokens[6];
-                    string saltedHash = tokens[7];
+                    string username = tokens[5].Trim();
+                    string password = tokens[6].Trim();
+                    //string saltedHash = tokens[7];
 
                     try
                     {
-                        addProfesor(name, surname, degree, salary, email, username, salt, saltedHash);
+                        addProfesor(name, surname, degree, salary, email, username, password);
                         strFromServer = "Profesor has been added successfuly!";
                         //Console.WriteLine(strFromServer);
                     }
@@ -196,7 +196,7 @@ namespace Server
             // Duhet me ja jep celsin publ
         }
 
-        public static void addProfesor(string name, string surname, string degree, double salary,string email,string username,string salt,string saltedHash)
+        public static void addProfesor(string name, string surname, string degree, double salary,string email,string username,string password)
         {
             if (File.Exists("mesimdhenesi.xml") == false)
             {
@@ -227,8 +227,10 @@ namespace Server
             salaryNode.InnerText = salary+"";
             emailNode.InnerText = email;
             usernameNode.InnerText = username;
+            Random random = new Random(DateTime.Now.Millisecond);
+            string salt = random.Next(100000, 1000000).ToString();
             saltNode.InnerText = salt;
-            saltedHashNode.InnerText = saltedHash;
+            saltedHashNode.InnerText = getSaltedHash(salt,password);
 
 
             profesorNode.AppendChild(nameNode);
@@ -244,6 +246,17 @@ namespace Server
             rootNode.AppendChild(profesorNode);
 
             objXml.Save("mesimdhenesi.xml");
+        }
+
+        private static string getSaltedHash(string salt, string password)
+        {
+            string saltedPassword = salt + password;
+            SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
+
+            byte[] byteSaltedPassword = Encoding.UTF8.GetBytes(saltedPassword);
+            byte[] byteSaltedHash = objHash.ComputeHash(byteSaltedPassword);
+
+            return Convert.ToBase64String(byteSaltedHash);
         }
 
         public static bool isValidLogin(string username,string password)
@@ -276,23 +289,36 @@ namespace Server
             XmlNodeList profesorElements = objXml.GetElementsByTagName("profesor");
 
 
-            for(int i = 0; i < profesorElements.Count; i++)
+            for (int i = 0; i < profesorElements.Count; i++)
             {
                 string usernameXml = profesorElements[i].SelectSingleNode("username").InnerText;
                 string saltedHashXml = profesorElements[i].SelectSingleNode("saltedHashPassword").InnerText;
-                string saltXml = profesorElements[i].SelectSingleNode("salt").InnerText; ;
-                Console.WriteLine(saltXml);
-                Console.WriteLine(saltedHashXml);
+                string saltXml = profesorElements[i].SelectSingleNode("salt").InnerText;
 
-                string saltedPasswordLogin = password + saltXml;
+                Console.WriteLine("usernameXml: " + usernameXml);
+                Console.WriteLine("Salt: " + saltXml);
 
-                SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
+                Console.WriteLine("SaltedHashXml: " + saltedHashXml);
+                Console.WriteLine(usernameXml + username);
 
-                byte[] byteSaltedPasswordLogin = Encoding.UTF8.GetBytes(saltedPasswordLogin);
-                byte[] byteSaltedHashLogin = objHash.ComputeHash(byteSaltedPasswordLogin);
-                string saltedHashLogin = Convert.ToBase64String(byteSaltedHashLogin);
+                Console.WriteLine(usernameXml + password);
+                Console.WriteLine(username + saltXml);
+                Console.WriteLine(password + saltXml);
 
-                if(usernameXml == username && saltedHashXml == saltedHashLogin)
+                string saltedPasswordLogin = saltXml + password;
+                Console.WriteLine("usernameLogin: " + username);
+                Console.WriteLine("\n\nPlain Password: " + password);
+                Console.WriteLine("SaltedPassword: " + saltedPasswordLogin);
+                //SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
+
+                //byte[] byteSaltedPasswordLogin = Encoding.UTF8.GetBytes(saltedPasswordLogin);
+                //byte[] byteSaltedHashLogin = objHash.ComputeHash(byteSaltedPasswordLogin);
+                string saltedHashLogin = getSaltedHash(saltXml, password);
+
+                Console.WriteLine("SaltedHashFromLogin : " + saltedHashLogin);
+                Console.WriteLine("====================================");
+
+                if (usernameXml.Equals(username) || saltedHashXml.Equals(saltedHashLogin))
                 {
                     return true;
                 }

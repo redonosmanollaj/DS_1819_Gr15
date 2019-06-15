@@ -47,6 +47,7 @@
             this.salaryTxt = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -220,12 +221,24 @@
             this.label8.TabIndex = 15;
             this.label8.Text = "Degree";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.DarkRed;
+            this.label9.Location = new System.Drawing.Point(422, 133);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(92, 13);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "* Wrong Name";
+            // 
             // SignUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkCyan;
             this.ClientSize = new System.Drawing.Size(630, 613);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.degreeTxt);
             this.Controls.Add(this.salaryTxt);
             this.Controls.Add(this.label7);
@@ -277,5 +290,6 @@
         private System.Windows.Forms.TextBox salaryTxt;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
     }
 }

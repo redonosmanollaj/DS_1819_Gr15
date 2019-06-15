@@ -119,10 +119,8 @@ namespace WindowsFormsApp1
                     string strFromServer = Encoding.UTF8.GetString(byteFromServer, 0, length);
                     string strFromServerDecrypted = dekriptoDes(strFromServer);
 
-                    if (strFromServerDecrypted == "YES")
-                        MessageBox.Show("Logged in successfuly!");
-                    else
-                        MessageBox.Show("Logged in failed!!"+strFromServerDecrypted);
+                    MessageBox.Show(strFromServerDecrypted);
+    
                 }
                 else
                 {

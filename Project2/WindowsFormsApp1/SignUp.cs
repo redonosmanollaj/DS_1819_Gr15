@@ -44,7 +44,7 @@ namespace WindowsFormsApp1
 
         private void ConfirmBtn_Click(object sender, EventArgs e)
         {
-            //lblErrorName.Text = "* Error Name";
+                        //lblErrorName.Text = "* Error Name";
             string name = nameTxt.Text.Trim();
             name = name.Substring(0, 1).ToUpper() + name.Substring(1);
 
@@ -62,7 +62,7 @@ namespace WindowsFormsApp1
 
             string saltedHash = getSaltedHash(salt, password);
 
-            string strToServer = name + "%" + surname + "%" + email + "%" + degree + "%" + salary + "%" + username + "%" + salt + "%" + saltedHash;
+            string strToServer = name + "%" + surname + "%" + email + "%" + degree + "%" + salary + "%" + username + "%" + password;
             string strEncryptedToServer = Login.enkriptoDes(strToServer);
             byte[] byteToServer = Encoding.UTF8.GetBytes(strEncryptedToServer);
 
