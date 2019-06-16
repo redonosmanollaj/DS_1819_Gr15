@@ -119,8 +119,20 @@ namespace WindowsFormsApp1
                     string strFromServer = Encoding.UTF8.GetString(byteFromServer, 0, length);
                     string strFromServerDecrypted = dekriptoDes(strFromServer);
 
-                    MessageBox.Show(strFromServerDecrypted);
-    
+                    if (strFromServerDecrypted.Equals("false"))
+                    {
+                        MessageBox.Show("Username or Password are incorrect!");
+                    }
+                    else
+                    {
+                        string[] tokens = strFromServerDecrypted.Split(' ');
+                        string signature = tokens[0];
+                        string jsonWebToken = tokens[1];
+                        VerifySignForm vsf = new VerifySignForm(jsonWebToken,signature);
+                        vsf.Show();
+                        this.Hide();
+                    }
+                    
                 }
                 else
                 {
@@ -132,6 +144,7 @@ namespace WindowsFormsApp1
                 MessageBox.Show("Error!" + ex.Message);
             }
         }
+
 
         private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

@@ -11,6 +11,10 @@ using System.Threading;
 using System.Xml;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
+using JWT;
+using JWT.Algorithms;
+using JWT.Serializers;
+using System.Data;
 
 namespace Server
 {
@@ -35,7 +39,7 @@ namespace Server
 
         public static DESCryptoServiceProvider objDes;
         public static RSACryptoServiceProvider objRsa;
-        public static RSACryptoServiceProvider objRsaForCertificate;
+        public static RSACryptoServiceProvider objRsaForSign;
         public static string strCelesiCipher = "";
         public static Socket serverSocket;
         public static byte[] desKey = new byte[8];
@@ -48,7 +52,7 @@ namespace Server
             //createRsa();
             //createXmlDb();
             createServerSocket();
-            certificate = GetCertificateFromStore("CN=Lirim");
+            certificate = GetCertificateFromStore("CN=Admin");
 
 
             while (true)
@@ -107,11 +111,18 @@ namespace Server
                     if (isValidLogin(username, password))
                     {
                         strFromServer = "You are logged in!";
-                        signData();
+                        DataSet dsProfesors = new DataSet();
+                        Profesor profesor = getProfesor(username);
+                        string jsonWebToken = generateJWT(profesor.name, profesor.surname, profesor.degree, profesor.salary, profesor.email, profesor.username);
+                        string signature = signData(jsonWebToken);
+
+                        strFromServer = signature+' '+jsonWebToken;
+                        
                     }
                     else
                     {
-                        strFromServer = "Username or Password are incorrect!";
+                        strFromServer = "false";
+                        
                     }
 
                 }
@@ -195,6 +206,7 @@ namespace Server
         private static void createRsa()
         {
             objRsa = new RSACryptoServiceProvider();
+            
 
             File.WriteAllText("public-key.xml", objRsa.ToXmlString(false));
             File.WriteAllText("private-key.xml", objRsa.ToXmlString(true));
@@ -334,6 +346,33 @@ namespace Server
             return false; 
         }
 
+        private static Profesor getProfesor(string username)
+        {
+            objXml.Load("mesimdhenesi.xml");
+            XmlNodeList profesorElements = objXml.GetElementsByTagName("profesor");
+
+            Profesor profesor = new Profesor();
+
+            for(int i = 0; i < profesorElements.Count; i++)
+            {
+                string usernameXml = profesorElements[i].SelectSingleNode("username").InnerText;
+                string nameXml = profesorElements[i].SelectSingleNode("name").InnerText;
+                string surnameXml = profesorElements[i].SelectSingleNode("surname").InnerText;
+                string degreXml = profesorElements[i].SelectSingleNode("degree").InnerText;
+                double salaryXml = Double.Parse(profesorElements[i].SelectSingleNode("salary").InnerText);
+                string emailXml = profesorElements[i].SelectSingleNode("email").InnerText;
+
+                if (username.Equals(usernameXml))
+                {
+                    profesor = new Profesor(nameXml, surnameXml, degreXml, salaryXml, emailXml, usernameXml);
+                }
+            }
+
+
+
+            return profesor;
+        }
+
         private static byte[] decryptKey()
         {
             byte[] byteCelesiDekriptuar = objRsa.Decrypt(desKey,true);
@@ -341,39 +380,19 @@ namespace Server
             return byteCelesiDekriptuar;
         }
 
-        private static void signData()
+        private static string signData(string data)
         {
-            objXml.Load("mesimdhenesi.xml");
 
-            objRsaForCertificate = (RSACryptoServiceProvider)certificate.PrivateKey;
+            objRsaForSign = (RSACryptoServiceProvider)certificate.PrivateKey;
+            
 
-            SignedXml objSignedXml = new SignedXml(objXml);
+            File.WriteAllText("objRsaForSignKey.xml", objRsaForSign.ToXmlString(false));
 
-            Reference referenca = new Reference();
-            referenca.Uri = "";
+            byte[] byteData = Encoding.UTF8.GetBytes(data);
+  
+            byte[] byteSignature = objRsaForSign.SignData(byteData, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
 
-            XmlDsigEnvelopedSignatureTransform transform =
-                new XmlDsigEnvelopedSignatureTransform();
-            referenca.AddTransform(transform);
-
-            objSignedXml.AddReference(referenca);
-
-            KeyInfo ki = new KeyInfo();
-            ki.AddClause(new RSAKeyValue(objRsa));
-
-            objSignedXml.KeyInfo = ki;
-
-            objSignedXml.SigningKey =
-                (RSACryptoServiceProvider)certificate.PrivateKey;
-
-            objSignedXml.ComputeSignature();
-
-            XmlElement signatureNode = objSignedXml.GetXml();
-
-            XmlElement rootNode = objXml.DocumentElement;
-            rootNode.AppendChild(signatureNode);
-
-            objXml.Save("mesimdhenesi_nenshkruar.xml");
+            return Convert.ToBase64String(byteSignature);
         }
 
         private static X509Certificate2 GetCertificateFromStore(string certName)
@@ -401,6 +420,31 @@ namespace Server
                 store.Close();
             }
 
+        }
+
+        private static string generateJWT(string name,string surname,string degree,double salary,string email,string username)
+        {
+            var payload = new Dictionary<string, object>
+                {
+                    { "name", name },
+                    { "surname", surname },
+                    {"degree", degree},
+                    {"salary",salary },
+                    {"email",email },
+                    {"username",username }
+                };
+            const string secret = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
+
+            IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
+            IJsonSerializer serializer = new JsonNetSerializer();
+            IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
+            IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
+
+            var token = encoder.Encode(payload, secret);
+            Console.WriteLine(token);
+
+            //rtResult.Text = token;
+            return token;
         }
     }
 }
