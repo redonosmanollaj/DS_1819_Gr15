@@ -9,6 +9,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Xml;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
 
 namespace Server
 {
@@ -33,17 +35,20 @@ namespace Server
 
         public static DESCryptoServiceProvider objDes;
         public static RSACryptoServiceProvider objRsa;
+        public static RSACryptoServiceProvider objRsaForCertificate;
         public static string strCelesiCipher = "";
         public static Socket serverSocket;
         public static byte[] desKey = new byte[8];
         public static byte[] desIV = new byte[8];
+
+        public static X509Certificate2 certificate;
         static void Main(string[] args)
         {
 
             //createRsa();
             //createXmlDb();
             createServerSocket();
-
+            certificate = GetCertificateFromStore("CN=Lirim");
 
 
             while (true)
@@ -102,6 +107,7 @@ namespace Server
                     if (isValidLogin(username, password))
                     {
                         strFromServer = "You are logged in!";
+                        signData();
                     }
                     else
                     {
@@ -248,10 +254,11 @@ namespace Server
             objXml.Save("mesimdhenesi.xml");
         }
 
+        public static SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
         private static string getSaltedHash(string salt, string password)
         {
-            string saltedPassword = salt + password;
-            SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
+            string saltedPassword = password+salt;
+             
 
             byte[] byteSaltedPassword = Encoding.UTF8.GetBytes(saltedPassword);
             byte[] byteSaltedHash = objHash.ComputeHash(byteSaltedPassword);
@@ -332,6 +339,68 @@ namespace Server
             byte[] byteCelesiDekriptuar = objRsa.Decrypt(desKey,true);
 
             return byteCelesiDekriptuar;
+        }
+
+        private static void signData()
+        {
+            objXml.Load("mesimdhenesi.xml");
+
+            objRsaForCertificate = (RSACryptoServiceProvider)certificate.PrivateKey;
+
+            SignedXml objSignedXml = new SignedXml(objXml);
+
+            Reference referenca = new Reference();
+            referenca.Uri = "";
+
+            XmlDsigEnvelopedSignatureTransform transform =
+                new XmlDsigEnvelopedSignatureTransform();
+            referenca.AddTransform(transform);
+
+            objSignedXml.AddReference(referenca);
+
+            KeyInfo ki = new KeyInfo();
+            ki.AddClause(new RSAKeyValue(objRsa));
+
+            objSignedXml.KeyInfo = ki;
+
+            objSignedXml.SigningKey =
+                (RSACryptoServiceProvider)certificate.PrivateKey;
+
+            objSignedXml.ComputeSignature();
+
+            XmlElement signatureNode = objSignedXml.GetXml();
+
+            XmlElement rootNode = objXml.DocumentElement;
+            rootNode.AppendChild(signatureNode);
+
+            objXml.Save("mesimdhenesi_nenshkruar.xml");
+        }
+
+        private static X509Certificate2 GetCertificateFromStore(string certName)
+        {
+
+            // Get the certificate store for the current user.
+            X509Store store = new X509Store(StoreLocation.CurrentUser);
+            try
+            {
+                store.Open(OpenFlags.ReadOnly);
+
+                // Place all certificates in an X509Certificate2Collection object.
+                X509Certificate2Collection certCollection = store.Certificates;
+                // If using a certificate with a trusted root you do not need to FindByTimeValid, instead:
+                // currentCerts.Find(X509FindType.FindBySubjectDistinguishedName, certName, true);
+                X509Certificate2Collection currentCerts = certCollection.Find(X509FindType.FindByTimeValid, DateTime.Now, false);
+                X509Certificate2Collection signingCert = currentCerts.Find(X509FindType.FindBySubjectDistinguishedName, certName, false);
+                if (signingCert.Count == 0)
+                    return null;
+                // Return the first certificate in the collection, has the right name and is current.
+                return signingCert[0];
+            }
+            finally
+            {
+                store.Close();
+            }
+
         }
     }
 }

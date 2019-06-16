@@ -70,7 +70,7 @@ namespace WindowsFormsApp1
 
                 string saltedHash = getSaltedHash(salt, password);
 
-                string strToServer = name + "%" + surname + "%" + email + "%" + degree + "%" + salary + "%" + username + "%" + password;
+                string strToServer = name + '%' + surname + '%' + email + '%' + degree + '%'+ salary + '%' + username + '%' + password;
                 string strEncryptedToServer = Login.enkriptoDes(strToServer);
                 byte[] byteToServer = Encoding.UTF8.GetBytes(strEncryptedToServer);
 
@@ -87,39 +87,45 @@ namespace WindowsFormsApp1
         //
         //validating methods
         //
-        private bool validateName(string input)
+        private bool validateName()
         {
             string pattern = "^[a-zA-Z]";
-            if (Regex.IsMatch(input, pattern) && input.Length > 2)
+            if (Regex.IsMatch(nameTxt.Text, pattern) && nameTxt.Text.Length > 2)
             {
+                lblName.Text = "";
                 return true;
             }
             else
             {
+                lblName.Text = "*Wrong input";
                 return false;
             }
         }
-        private static bool validateSurname(string input)
+        private bool validateSurname(string input)
         {
             string pattern = "^[a-zA-Z]";
             if (Regex.IsMatch(input, pattern) && input.Length > 2)
             {
+                lblEmail.Text = "";
                 return true;
             }
             else
             {
+                lblEmail.Text = "*Wrong email";
                 return false;
             }
         }
-        private static bool validateDegree(string input)
+        private bool validateDegree(string input)
         {
             string pattern = "^[a-zA-Z]";
             if (Regex.IsMatch(input, pattern))
             {
+                lblDegree.Text = "";
                 return true;
             }
             else
             {
+                lblDegree.Text = "*Wrong input";
                 return false;
             }
         }
@@ -172,19 +178,19 @@ namespace WindowsFormsApp1
         private bool validate()
         {
 
-            if (validateName(nameTxt.Text) == false)
+            if (validateName() == false)
             {
-                lblName.Text = "*Wrong input";
+                
                 return false;
             }
             if (validateEmail(emailTxt.Text) == false)
             {
-                lblEmail.Text = "*Wrong email";
+                
                 return false;
             }
             if (validateDegree(degreeTxt.Text) == false)
             {
-                lblDegree.Text = "*Wrong input";
+                
                 return false;
             }
             if (validatePass(passwordTxt.Text) == false)
@@ -214,7 +220,7 @@ namespace WindowsFormsApp1
             }
             if (validateUsername(usernameTxt.Text) && validateSurname(surnameTxt.Text) && 
                 validateSalary(double.Parse(salaryTxt.Text)) &&
-                validatePass(passwordTxt.Text) && validateName(nameTxt.Text) && 
+                validatePass(passwordTxt.Text) && validateName() && 
                 validateEmail(emailTxt.Text) && validateDegree(degreeTxt.Text))
             {
                 return true;
