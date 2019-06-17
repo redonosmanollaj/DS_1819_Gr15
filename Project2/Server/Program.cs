@@ -48,6 +48,7 @@ namespace Server
         public static X509Certificate2 certificate;
 
         public static SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
+        public static SHA1Managed objHashManaged = new SHA1Managed();
 
         static void Main(string[] args)
         {
@@ -95,13 +96,13 @@ namespace Server
             while (true)
             {
                 byte[] byteFromClient = new byte[1024];
-                int length = connSocket.Receive(byteFromClient);
+                        int length = connSocket.Receive(byteFromClient);
                 string strFromClient = Encoding.UTF8.GetString(byteFromClient, 0, length);
 
 
-                Console.WriteLine("Client: (Ciphertext) {0} ", strFromClient);
+                Console.WriteLine("Client: (Ciphertext) {0} \n", strFromClient);
                 string fromClientDecrypted = dekriptoDes(strFromClient);
-                Console.WriteLine("Client: (Plaintext) {0} ", fromClientDecrypted);
+                Console.WriteLine("Client: (Plaintext) {0} \n", fromClientDecrypted);
 
                 string[] tokens = fromClientDecrypted.Split(' ');
                 Console.WriteLine(tokens.Length);
@@ -144,7 +145,7 @@ namespace Server
                     try
                     {
                         addProfesor(name, surname, degree, salary, email, username, password);
-                        strFromServer = "Profesor has been added successfuly!";
+                        strFromServer = "true";
                         //Console.WriteLine(strFromServer);
                     }
                     catch (Exception ex)
@@ -160,10 +161,10 @@ namespace Server
                 //
 
 
-                Console.WriteLine("Server: (Plaintext) {0} ", strFromServer);
+                Console.WriteLine("Server: (Plaintext) {0} \n", strFromServer);
                 string strFromServerEncrypted = enkriptoDes(strFromServer);
                 connSocket.Send(Encoding.UTF8.GetBytes(strFromServerEncrypted));
-                Console.WriteLine("Server: (Ciphertext) {0} ", strFromServerEncrypted);
+                Console.WriteLine("Server: (Ciphertext) {0} \n", strFromServerEncrypted);
             }
         }
 
@@ -279,6 +280,7 @@ namespace Server
             byte[] byteSaltedHash = objHash.ComputeHash(byteSaltedPassword);
 
             return Convert.ToBase64String(byteSaltedHash);
+            
         }
 
         public static bool isValidLogin(string username,string password)
@@ -317,30 +319,22 @@ namespace Server
                 string saltedHashXml = profesorElements[i].SelectSingleNode("saltedHashPassword").InnerText;
                 string saltXml = profesorElements[i].SelectSingleNode("salt").InnerText;
 
-                Console.WriteLine("usernameXml: " + usernameXml);
-                Console.WriteLine("Salt: " + saltXml);
 
-                Console.WriteLine("SaltedHashXml: " + saltedHashXml);
-                Console.WriteLine(usernameXml + username);
-
-                Console.WriteLine(usernameXml + password);
-                Console.WriteLine(username + saltXml);
-                Console.WriteLine(password + saltXml);
 
                 string saltedPasswordLogin = saltXml + password;
-                Console.WriteLine("usernameLogin: " + username);
-                Console.WriteLine("\n\nPlain Password: " + password);
-                Console.WriteLine("SaltedPassword: " + saltedPasswordLogin);
-                //SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
 
-                //byte[] byteSaltedPasswordLogin = Encoding.UTF8.GetBytes(saltedPasswordLogin);
-                //byte[] byteSaltedHashLogin = objHash.ComputeHash(byteSaltedPasswordLogin);
+
                 string saltedHashLogin = getSaltedHash(saltXml, password);
 
-                Console.WriteLine("SaltedHashFromLogin : " + saltedHashLogin);
+                Console.WriteLine("=================================");
+                Console.WriteLine("Username(xml): " + usernameXml);
+                Console.WriteLine("SaltedHash(xml): " + saltedHashXml);
+
+                Console.WriteLine("Username(login): " + username);
+                Console.WriteLine("SaltedHash(login): " + saltedHashLogin);
                 Console.WriteLine("====================================");
 
-                if (usernameXml.Equals(username) || saltedHashXml.Equals(saltedHashLogin))
+                if (usernameXml.Equals(username) && saltedHashXml.Equals(saltedHashLogin))
                 {
                     return true;
                 }
@@ -444,7 +438,7 @@ namespace Server
             IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
 
             var token = encoder.Encode(payload, secret);
-            Console.WriteLine(token);
+            Console.WriteLine("JsonWebToken: "+token+"\n");
 
             //rtResult.Text = token;
             return token;

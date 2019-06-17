@@ -82,7 +82,7 @@ namespace WindowsFormsApp1
             return byteCelesiCipher;
         }
 
-        private static string dekriptoDes(string strFromServer)
+        public static string dekriptoDes(string strFromServer)
         {
             byte[] byteFromServer = Convert.FromBase64String(strFromServer);
 
@@ -118,13 +118,13 @@ namespace WindowsFormsApp1
             {
                 string strFromClient = txtUsername.Text.Trim()+' '+txtPassword.Text.Trim();
 
-                if (strFromClient != "")
+                if (strFromClient != " ")
                 {
                     clientSocket.Send(Encoding.UTF8.GetBytes(enkriptoDes(strFromClient)));
                     byte[] byteFromServer = new byte[1024];
                     int length = clientSocket.Receive(byteFromServer);
                     string strFromServer = Encoding.UTF8.GetString(byteFromServer, 0, length);
-                    string strFromServerDecrypted = dekriptoDes(strFromServer);
+                    string strFromServerDecrypted = dekriptoDes(strFromServer).Trim();
 
                     if (strFromServerDecrypted.Equals("false"))
                     {

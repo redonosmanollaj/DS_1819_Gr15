@@ -46,11 +46,11 @@ namespace WindowsFormsApp1
         {
             string name = nameTxt.Text;
             string username = usernameTxt.Text;
-            string email = emailTxt.Text;
-            string degree = degreeTxt.Text;
-            string salary = salaryTxt.Text;
-            string surname = usernameTxt.Text;
-            string password = passwordTxt.Text;
+            string email = emailTxt.Text.Trim();
+            string degree = degreeTxt.Text.Trim();
+            string salary = salaryTxt.Text.Trim();
+            string surname = usernameTxt.Text.Trim();
+            string password = passwordTxt.Text.Trim();
 
            
             if(validate())
@@ -61,10 +61,6 @@ namespace WindowsFormsApp1
                 surname = surnameTxt.Text.Trim();
                 surname = surname.Substring(0, 1).ToUpper() + surname.Substring(1);
 
-                Random random = new Random(DateTime.Now.Millisecond);
-                string salt = random.Next(100000, 1000000).ToString();
-
-                string saltedHash = getSaltedHash(salt, password);
 
                 string strToServer = name + ' ' + surname + ' ' + email + ' ' + degree + ' '+ salary + ' ' + username + ' ' + password;
                 string strEncryptedToServer = Login.enkriptoDes(strToServer);
@@ -72,11 +68,24 @@ namespace WindowsFormsApp1
 
                 Login.clientSocket.Send(byteToServer);
 
-                MessageBox.Show("Registered successfully");
+                byte[] byteFromServer = new byte[1024];
+                int length = Login.clientSocket.Receive(byteFromServer);
+                string strFromServer = Encoding.UTF8.GetString(byteFromServer, 0, length);
+                string strFromServerDecrypted = Login.dekriptoDes(strFromServer);
+
+                if (strFromServerDecrypted.Equals("true"))
+                {
+                    MessageBox.Show("Registered successfully");
+                    Login login = new Login();
+                    this.Hide();
+                    login.Show();
+                }
+                else
+                    MessageBox.Show(strFromServerDecrypted);
             }
             else
             {
-                MessageBox.Show("Can't confirm registration!");
+                MessageBox.Show("The inputs are wrong!");
             }
            
         }
@@ -127,7 +136,7 @@ namespace WindowsFormsApp1
         }
         private static bool validateSalary(double input)
         {
-            if (input == double.NaN && input < 150 && input > 2000)
+            if (input == double.NaN)
             {
                 return false;
             }
@@ -150,7 +159,8 @@ namespace WindowsFormsApp1
         }
         private static bool validatePass(string input)
         {
-            if (input.Length > 6)
+            string pattern = "^[\\S*$]"; // no spaces
+            if (input.Length > 6 && Regex.IsMatch(input,pattern))
             {
                 return true;
             }
