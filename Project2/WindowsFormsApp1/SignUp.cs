@@ -23,18 +23,6 @@ namespace WindowsFormsApp1
 
 
 
-        private static string getSaltedHash(string salt, string password)
-        {
-            string saltedPassword = salt + password;
-            SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
-
-            byte[] byteSaltedPassword = Encoding.UTF8.GetBytes(saltedPassword);
-            byte[] byteSaltedHash = objHash.ComputeHash(byteSaltedPassword);
-
-            return Convert.ToBase64String(byteSaltedHash);
-            
-        }
-
         private void LinkLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Login login = new Login();
@@ -73,7 +61,7 @@ namespace WindowsFormsApp1
                 string strFromServer = Encoding.UTF8.GetString(byteFromServer, 0, length);
                 string strFromServerDecrypted = Login.dekriptoDes(strFromServer);
 
-                if (strFromServerDecrypted.Equals("true"))
+                if (strFromServerDecrypted.Equals("true",StringComparison.OrdinalIgnoreCase))
                 {
                     MessageBox.Show("Registered successfully");
                     Login login = new Login();
