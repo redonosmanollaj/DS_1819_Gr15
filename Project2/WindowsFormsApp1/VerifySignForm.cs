@@ -15,11 +15,13 @@ namespace WindowsFormsApp1
     public partial class VerifySignForm : Form
     {
         RSACryptoServiceProvider objRsaForVerify;
-        public VerifySignForm(string jsonWebToken,string signature)
+        string username;
+        public VerifySignForm(string jsonWebToken,string signature,string username)
         {
             InitializeComponent();
             rtSignature.Text = signature;
             rtJsonWebToken.Text = jsonWebToken;
+            this.username = username;
         }
 
         private void BtnVerifySign_Click(object sender, EventArgs e)
@@ -40,15 +42,23 @@ namespace WindowsFormsApp1
 
             if (valid)
             {
-                MessageBox.Show("Nenshkrimi eshte valid");
-                ProfesorDataForm pdf = new ProfesorDataForm(rtJsonWebToken.Text);
-                pdf.Show();
+                MessageBox.Show("The signature is valid");
+                ProfesorDataForm pdf = new ProfesorDataForm(rtJsonWebToken.Text,rtSignature.Text,username);
                 this.Hide();
+                pdf.Show();
             }
             else
             {
-                MessageBox.Show("Nenshkrimi nuk eshte valid!");
+                MessageBox.Show("The signature is not valid!");
             }
         }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Main main = new Main(rtJsonWebToken.Text, rtSignature.Text, username); ;
+            this.Hide();
+            main.Show();
+        }
+
     }
 }

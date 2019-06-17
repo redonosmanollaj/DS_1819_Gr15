@@ -28,16 +28,23 @@ namespace WindowsFormsApp1
         private void Login_Load(object sender, EventArgs e)
         {
             //createRsa();
-            createDes();
 
             try
             {
+
                 clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 clientSocket.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 12000));
+                if (objDes == null)
+                {
+                    createDes();
+
+                }
+                    
+
             }
-            catch(SocketException ex)
+            catch (SocketException ex)
             {
-                MessageBox.Show("Connection with server failed!\n"+ex.Message);
+                MessageBox.Show("Connection with server failed!\n" + ex.Message);
             }
 
             clientSocket.Send(objDes.Key);
@@ -109,7 +116,7 @@ namespace WindowsFormsApp1
         {
             try
             {
-                string strFromClient = txtUsername.Text+'%'+txtPassword.Text;
+                string strFromClient = txtUsername.Text.Trim()+' '+txtPassword.Text.Trim();
 
                 if (strFromClient != "")
                 {
@@ -128,9 +135,11 @@ namespace WindowsFormsApp1
                         string[] tokens = strFromServerDecrypted.Split(' ');
                         string signature = tokens[0];
                         string jsonWebToken = tokens[1];
-                        VerifySignForm vsf = new VerifySignForm(jsonWebToken,signature);
-                        vsf.Show();
+
+                        Main main = new Main(jsonWebToken, signature, txtUsername.Text);
                         this.Hide();
+                        main.Show();
+
                     }
                     
                 }
@@ -149,8 +158,9 @@ namespace WindowsFormsApp1
         private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             SignUp signup = new SignUp();
-            signup.Show();
             this.Hide();
+            signup.Show();
+
         }
     }
 }

@@ -63,7 +63,7 @@
             this.confirmpswTxt.BackColor = System.Drawing.Color.Linen;
             this.confirmpswTxt.Location = new System.Drawing.Point(178, 482);
             this.confirmpswTxt.Name = "confirmpswTxt";
-            this.confirmpswTxt.Size = new System.Drawing.Size(293, 27);
+            this.confirmpswTxt.Size = new System.Drawing.Size(293, 24);
             this.confirmpswTxt.TabIndex = 7;
             this.confirmpswTxt.UseSystemPasswordChar = true;
             // 
@@ -72,7 +72,7 @@
             this.nameTxt.BackColor = System.Drawing.Color.Linen;
             this.nameTxt.Location = new System.Drawing.Point(178, 163);
             this.nameTxt.Name = "nameTxt";
-            this.nameTxt.Size = new System.Drawing.Size(293, 27);
+            this.nameTxt.Size = new System.Drawing.Size(293, 24);
             this.nameTxt.TabIndex = 6;
             // 
             // passwordTxt
@@ -80,7 +80,7 @@
             this.passwordTxt.BackColor = System.Drawing.Color.Linen;
             this.passwordTxt.Location = new System.Drawing.Point(178, 439);
             this.passwordTxt.Name = "passwordTxt";
-            this.passwordTxt.Size = new System.Drawing.Size(293, 27);
+            this.passwordTxt.Size = new System.Drawing.Size(293, 24);
             this.passwordTxt.TabIndex = 8;
             this.passwordTxt.UseSystemPasswordChar = true;
             // 
@@ -89,7 +89,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(89, 254);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(58, 18);
+            this.label6.Size = new System.Drawing.Size(48, 17);
             this.label6.TabIndex = 5;
             this.label6.Text = "e-Mail";
             // 
@@ -98,7 +98,7 @@
             this.usernameTxt.BackColor = System.Drawing.Color.Linen;
             this.usernameTxt.Location = new System.Drawing.Point(178, 393);
             this.usernameTxt.Name = "usernameTxt";
-            this.usernameTxt.Size = new System.Drawing.Size(293, 27);
+            this.usernameTxt.Size = new System.Drawing.Size(293, 24);
             this.usernameTxt.TabIndex = 9;
             // 
             // label5
@@ -106,7 +106,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(66, 207);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(79, 18);
+            this.label5.Size = new System.Drawing.Size(71, 17);
             this.label5.TabIndex = 4;
             this.label5.Text = "Surname";
             // 
@@ -115,7 +115,7 @@
             this.emailTxt.BackColor = System.Drawing.Color.Linen;
             this.emailTxt.Location = new System.Drawing.Point(178, 254);
             this.emailTxt.Name = "emailTxt";
-            this.emailTxt.Size = new System.Drawing.Size(293, 27);
+            this.emailTxt.Size = new System.Drawing.Size(293, 24);
             this.emailTxt.TabIndex = 10;
             // 
             // label4
@@ -123,7 +123,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(91, 163);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 18);
+            this.label4.Size = new System.Drawing.Size(47, 17);
             this.label4.TabIndex = 3;
             this.label4.Text = "Name";
             // 
@@ -132,7 +132,7 @@
             this.surnameTxt.BackColor = System.Drawing.Color.Linen;
             this.surnameTxt.Location = new System.Drawing.Point(178, 207);
             this.surnameTxt.Name = "surnameTxt";
-            this.surnameTxt.Size = new System.Drawing.Size(293, 27);
+            this.surnameTxt.Size = new System.Drawing.Size(293, 24);
             this.surnameTxt.TabIndex = 11;
             // 
             // label3
@@ -140,7 +140,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(61, 439);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 18);
+            this.label3.Size = new System.Drawing.Size(75, 17);
             this.label3.TabIndex = 2;
             this.label3.Text = "Password";
             // 
@@ -149,7 +149,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(-2, 482);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(154, 18);
+            this.label2.Size = new System.Drawing.Size(136, 17);
             this.label2.TabIndex = 1;
             this.label2.Text = "Confirm password";
             // 
@@ -168,7 +168,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(56, 393);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 18);
+            this.label1.Size = new System.Drawing.Size(78, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Username";
             // 
@@ -176,9 +176,9 @@
             // 
             this.linkLogin.AutoSize = true;
             this.linkLogin.LinkColor = System.Drawing.Color.MediumBlue;
-            this.linkLogin.Location = new System.Drawing.Point(411, 554);
+            this.linkLogin.Location = new System.Drawing.Point(417, 569);
             this.linkLogin.Name = "linkLogin";
-            this.linkLogin.Size = new System.Drawing.Size(60, 18);
+            this.linkLogin.Size = new System.Drawing.Size(53, 17);
             this.linkLogin.TabIndex = 14;
             this.linkLogin.TabStop = true;
             this.linkLogin.Text = "Log In";
@@ -201,7 +201,7 @@
             this.degreeTxt.BackColor = System.Drawing.Color.Linen;
             this.degreeTxt.Location = new System.Drawing.Point(178, 300);
             this.degreeTxt.Name = "degreeTxt";
-            this.degreeTxt.Size = new System.Drawing.Size(293, 27);
+            this.degreeTxt.Size = new System.Drawing.Size(293, 24);
             this.degreeTxt.TabIndex = 18;
             // 
             // salaryTxt
@@ -209,7 +209,7 @@
             this.salaryTxt.BackColor = System.Drawing.Color.Linen;
             this.salaryTxt.Location = new System.Drawing.Point(178, 347);
             this.salaryTxt.Name = "salaryTxt";
-            this.salaryTxt.Size = new System.Drawing.Size(293, 27);
+            this.salaryTxt.Size = new System.Drawing.Size(293, 24);
             this.salaryTxt.TabIndex = 17;
             // 
             // label7
@@ -217,7 +217,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(89, 347);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(58, 18);
+            this.label7.Size = new System.Drawing.Size(51, 17);
             this.label7.TabIndex = 16;
             this.label7.Text = "Salary";
             // 
@@ -226,7 +226,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(79, 300);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(66, 18);
+            this.label8.Size = new System.Drawing.Size(58, 17);
             this.label8.TabIndex = 15;
             this.label8.Text = "Degree";
             // 
@@ -237,7 +237,7 @@
             this.lblName.ForeColor = System.Drawing.Color.DarkRed;
             this.lblName.Location = new System.Drawing.Point(470, 168);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(0, 16);
+            this.lblName.Size = new System.Drawing.Size(0, 13);
             this.lblName.TabIndex = 19;
             // 
             // lblSurname
@@ -247,7 +247,7 @@
             this.lblSurname.ForeColor = System.Drawing.Color.DarkRed;
             this.lblSurname.Location = new System.Drawing.Point(470, 212);
             this.lblSurname.Name = "lblSurname";
-            this.lblSurname.Size = new System.Drawing.Size(0, 16);
+            this.lblSurname.Size = new System.Drawing.Size(0, 13);
             this.lblSurname.TabIndex = 20;
             // 
             // lblDegree
@@ -257,7 +257,7 @@
             this.lblDegree.ForeColor = System.Drawing.Color.DarkRed;
             this.lblDegree.Location = new System.Drawing.Point(470, 305);
             this.lblDegree.Name = "lblDegree";
-            this.lblDegree.Size = new System.Drawing.Size(0, 16);
+            this.lblDegree.Size = new System.Drawing.Size(0, 13);
             this.lblDegree.TabIndex = 21;
             // 
             // lblSalary
@@ -267,7 +267,7 @@
             this.lblSalary.ForeColor = System.Drawing.Color.DarkRed;
             this.lblSalary.Location = new System.Drawing.Point(470, 352);
             this.lblSalary.Name = "lblSalary";
-            this.lblSalary.Size = new System.Drawing.Size(0, 16);
+            this.lblSalary.Size = new System.Drawing.Size(0, 13);
             this.lblSalary.TabIndex = 22;
             // 
             // lblUsername
@@ -277,7 +277,7 @@
             this.lblUsername.ForeColor = System.Drawing.Color.DarkRed;
             this.lblUsername.Location = new System.Drawing.Point(470, 398);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(0, 16);
+            this.lblUsername.Size = new System.Drawing.Size(0, 13);
             this.lblUsername.TabIndex = 23;
             // 
             // lblPassword
@@ -287,7 +287,7 @@
             this.lblPassword.ForeColor = System.Drawing.Color.DarkRed;
             this.lblPassword.Location = new System.Drawing.Point(470, 444);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(0, 16);
+            this.lblPassword.Size = new System.Drawing.Size(0, 13);
             this.lblPassword.TabIndex = 24;
             // 
             // lblConfirmPassword
@@ -297,7 +297,7 @@
             this.lblConfirmPassword.ForeColor = System.Drawing.Color.DarkRed;
             this.lblConfirmPassword.Location = new System.Drawing.Point(470, 487);
             this.lblConfirmPassword.Name = "lblConfirmPassword";
-            this.lblConfirmPassword.Size = new System.Drawing.Size(0, 16);
+            this.lblConfirmPassword.Size = new System.Drawing.Size(0, 13);
             this.lblConfirmPassword.TabIndex = 25;
             // 
             // lblEmail
@@ -307,12 +307,12 @@
             this.lblEmail.ForeColor = System.Drawing.Color.DarkRed;
             this.lblEmail.Location = new System.Drawing.Point(470, 259);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(0, 16);
+            this.lblEmail.Size = new System.Drawing.Size(0, 13);
             this.lblEmail.TabIndex = 26;
             // 
             // SignUp
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkCyan;
             this.ClientSize = new System.Drawing.Size(660, 613);
@@ -346,8 +346,8 @@
             this.Font = new System.Drawing.Font("Verdana", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.DarkGray;
             this.Name = "SignUp";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sign Up";
-            this.Load += new System.EventHandler(this.SignUp_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

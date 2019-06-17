@@ -46,6 +46,9 @@ namespace Server
         public static byte[] desIV = new byte[8];
 
         public static X509Certificate2 certificate;
+
+        public static SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
+
         static void Main(string[] args)
         {
 
@@ -83,7 +86,8 @@ namespace Server
             
             connSocket.Receive(desKey);
             connSocket.Receive(desIV);
-            createDes();
+            if(objDes==null)
+                createDes();
 
 
 
@@ -99,7 +103,7 @@ namespace Server
                 string fromClientDecrypted = dekriptoDes(strFromClient);
                 Console.WriteLine("Client: (Plaintext) {0} ", fromClientDecrypted);
 
-                string[] tokens = fromClientDecrypted.Split('%');
+                string[] tokens = fromClientDecrypted.Split(' ');
                 Console.WriteLine(tokens.Length);
 
                 string strFromServer = "";
@@ -266,7 +270,6 @@ namespace Server
             objXml.Save("mesimdhenesi.xml");
         }
 
-        public static SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
         private static string getSaltedHash(string salt, string password)
         {
             string saltedPassword = password+salt;

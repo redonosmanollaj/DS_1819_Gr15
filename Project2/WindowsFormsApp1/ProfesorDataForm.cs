@@ -16,10 +16,14 @@ namespace WindowsFormsApp1
     public partial class ProfesorDataForm : Form
     {
         string jsonWebToken;
-        public ProfesorDataForm(string jsonWebToken)
+        string signature;
+        string username;
+        public ProfesorDataForm(string jsonWebToken,string signature,string username)
         {
             InitializeComponent();
             this.jsonWebToken = jsonWebToken;
+            this.signature = signature;
+            this.username = username;
         }
 
         private void ProfesorDataForm_Load(object sender, EventArgs e)
@@ -58,6 +62,20 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show("Token has invalid signature");
             }
+        }
+
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
+            VerifySignForm vsf = new VerifySignForm(jsonWebToken, signature,username);
+            this.Hide();
+            vsf.Show();
+        }
+
+        private void BtnLogout_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            this.Hide();
+            login.Show();
         }
     }
 }

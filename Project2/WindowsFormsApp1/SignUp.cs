@@ -21,10 +21,6 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        private void SignUp_Load(object sender, EventArgs e)
-        {
-
-        }
 
 
         private static string getSaltedHash(string salt, string password)
@@ -70,7 +66,7 @@ namespace WindowsFormsApp1
 
                 string saltedHash = getSaltedHash(salt, password);
 
-                string strToServer = name + '%' + surname + '%' + email + '%' + degree + '%'+ salary + '%' + username + '%' + password;
+                string strToServer = name + ' ' + surname + ' ' + email + ' ' + degree + ' '+ salary + ' ' + username + ' ' + password;
                 string strEncryptedToServer = Login.enkriptoDes(strToServer);
                 byte[] byteToServer = Encoding.UTF8.GetBytes(strEncryptedToServer);
 
