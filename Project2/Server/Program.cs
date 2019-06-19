@@ -96,7 +96,7 @@ namespace Server
             while (true)
             {
                 byte[] byteFromClient = new byte[1024];
-                        int length = connSocket.Receive(byteFromClient);
+                int length = connSocket.Receive(byteFromClient);
                 string strFromClient = Encoding.UTF8.GetString(byteFromClient, 0, length);
 
 
@@ -277,7 +277,7 @@ namespace Server
              
 
             byte[] byteSaltedPassword = Encoding.UTF8.GetBytes(saltedPassword);
-            byte[] byteSaltedHash = objHash.ComputeHash(byteSaltedPassword);
+            byte[] byteSaltedHash = objHashManaged.ComputeHash(byteSaltedPassword);
 
             return Convert.ToBase64String(byteSaltedHash);
             
@@ -286,29 +286,6 @@ namespace Server
         public static bool isValidLogin(string username,string password)
         {
             objXml.Load("mesimdhenesi.xml");
-
-
-            /*  foreach(XmlNode node in objXml.SelectNodes("//profesor"))
-              {
-                  string usernameXml = node.SelectSingleNode("username").InnerText;
-                  string saltedHashXml = node.SelectSingleNode("saltedHashPassword").InnerText;
-                  string saltXml = node.SelectSingleNode("salt").InnerText; ;
-
-                  string saltedPasswordLogin = password + saltXml;
-
-                  SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
-
-                  byte[] byteSaltedPasswordLogin = Encoding.UTF8.GetBytes(saltedPasswordLogin);
-                  byte[] byteSaltedHashLogin = objHash.ComputeHash(byteSaltedPasswordLogin);
-                  string saltedHashLogin = Convert.ToBase64String(byteSaltedHashLogin);
-
-
-                  if(usernameXml == username && saltedHashXml == saltedHashLogin)
-                  {
-                      return true;
-                  }
-
-              } */
 
             XmlNodeList profesorElements = objXml.GetElementsByTagName("profesor");
 

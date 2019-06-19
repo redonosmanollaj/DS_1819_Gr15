@@ -61,15 +61,12 @@ namespace WindowsFormsApp1
                 string strFromServer = Encoding.UTF8.GetString(byteFromServer, 0, length);
                 string strFromServerDecrypted = Login.dekriptoDes(strFromServer);
 
-                if (strFromServerDecrypted.Equals("true",StringComparison.OrdinalIgnoreCase))
-                {
+
                     MessageBox.Show("Registered successfully");
                     Login login = new Login();
                     this.Hide();
                     login.Show();
-                }
-                else
-                    MessageBox.Show(strFromServerDecrypted);
+
             }
             else
             {
@@ -94,24 +91,24 @@ namespace WindowsFormsApp1
                 return false;
             }
         }
-        private bool validateSurname(string input)
+        private bool validateSurname()
         {
             string pattern = "^[a-zA-Z]";
-            if (Regex.IsMatch(input, pattern) && input.Length > 2)
+            if (Regex.IsMatch(surnameTxt.Text, pattern) && surnameTxt.Text.Length > 2)
             {
-                lblEmail.Text = "";
+                lblSurname.Text = "";
                 return true;
             }
             else
             {
-                lblEmail.Text = "*Wrong email";
+                lblSurname.Text = "*Wrong input";
                 return false;
             }
         }
-        private bool validateDegree(string input)
+        private bool validateDegree()
         {
             string pattern = "^[a-zA-Z]";
-            if (Regex.IsMatch(input, pattern))
+            if (Regex.IsMatch(degreeTxt.Text, pattern))
             {
                 lblDegree.Text = "";
                 return true;
@@ -122,100 +119,80 @@ namespace WindowsFormsApp1
                 return false;
             }
         }
-        private static bool validateSalary(double input)
+        private bool validateSalary()
         {
-            if (input == double.NaN)
+            if (Double.Parse(salaryTxt.Text) == double.NaN)
             {
+                lblSalary.Text = "*Input a number!";
                 return false;
             }
             else
             {
+                lblSalary.Text = "";
                 return true;
             }
         }
-        private static bool validateUsername(string input)
+        private bool validateUsername()
         {
             string pattern = "^[a-zA-Z0-9]";
-            if (Regex.IsMatch(input, pattern) && input.Length > 5)
+            if (Regex.IsMatch(usernameTxt.Text, pattern) && usernameTxt.Text.Length > 5)
             {
+                lblUsername.Text = "";
                 return true;
             }
             else
             {
+                lblUsername.Text = "*Wrong input";
                 return false;
             }
         }
-        private static bool validatePass(string input)
+        private bool validatePass()
         {
             string pattern = "^[\\S*$]"; // no spaces
-            if (input.Length > 6 && Regex.IsMatch(input,pattern))
+            if (passwordTxt.Text.Length > 6 && Regex.IsMatch(passwordTxt.Text,pattern))
             {
+                lblPassword.Text = "";
                 return true;
             }
             else
             {
+                lblPassword.Text = "*Input more chars";
                 return false;
             }
         }
-        private static bool validateEmail(string input)
+
+        private bool validateConfirmPass()
+        {
+            if(confirmpswTxt.Text != passwordTxt.Text)
+            {
+                lblConfirmPassword.Text = "*Passwords does'nt match";
+                return false;
+            }
+            else
+            {
+                lblConfirmPassword.Text = "";
+                return true;
+            }
+        }
+        private bool validateEmail()
         {
             string pattern = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
-            if (Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(emailTxt.Text, pattern, RegexOptions.IgnoreCase))
             {
+                lblEmail.Text = "";
                 return true;
             }
             else
             {
+                lblEmail.Text = "* Wrong email";
                 return false;
             }
         }
         private bool validate()
         {
 
-            if (validateName() == false)
-            {
-                
-                return false;
-            }
-            if (validateEmail(emailTxt.Text) == false)
-            {
-                
-                return false;
-            }
-            if (validateDegree(degreeTxt.Text) == false)
-            {
-                
-                return false;
-            }
-            if (validatePass(passwordTxt.Text) == false)
-            {
-                lblPassword.Text = "*Input more chars";
-                return false;
-            }
-            if (validateSalary(double.Parse(salaryTxt.Text)) == false)
-            {
-                lblSalary.Text = "*Input a number!";
-                return false;
-            }
-            if (validateSurname(surnameTxt.Text) == false)
-            {
-                lblSurname.Text = "*Wrong input";
-                return false;
-            }
-            if (validateUsername(usernameTxt.Text) == false)
-            {
-                lblUsername.Text = "*Wrong input";
-                return false;
-            }
-            if (lblConfirmPassword.Text != lblPassword.Text)
-            {
-                lblConfirmPassword.Text = "*Passwords does'nt match";
-                return false;
-            }
-            if (validateUsername(usernameTxt.Text) && validateSurname(surnameTxt.Text) && 
-                validateSalary(double.Parse(salaryTxt.Text)) &&
-                validatePass(passwordTxt.Text) && validateName() && 
-                validateEmail(emailTxt.Text) && validateDegree(degreeTxt.Text))
+            if(validateName() && validateSurname() && validateEmail() && validateDegree() && validateSalary() &&
+                validateUsername() && validatePass() && validateConfirmPass())
             {
                 return true;
             }
